@@ -1,6 +1,7 @@
 package view;
 import  java.util.Scanner;
 import controller.Controller;
+import static java.lang.System.out;
 import  java.io.PrintStream;
 
 public class View {

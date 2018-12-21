@@ -9,7 +9,5 @@ public class Main {
             "3)Archivos. \n 4)Pelicuals. \n 5)Directores. \n" +
             " 6)Actores. \n 7)Listados. \n");
 
-
-
     }
 }

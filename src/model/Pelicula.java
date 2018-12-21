@@ -2,24 +2,43 @@ package model;
 
 import java.util.ArrayList;
 
-public class Peliculas {
+public class Pelicula {
 
     private ArrayList<Director> direccion = new ArrayList();
     private  ArrayList<Actor> reparto = new ArrayList();
-
     private String titulo;
     private String ano;
-    private Float duracion = 0f;//con punto 1.2
+    private Float duracion = 0f; //Separados por < . >
     private String pais;
-    //private String direcion;//combertir a coleccion?¿?
     private String guion;
     private String musica;
     private String fotografia;
-    //private String reparto;//coleccion¿?¿?
     private String productora;
     private String simnosis;
 
-    public ArrayList<Director> getDireccion() {
+//------------------------------------------------------
+//        Constructors
+
+    public Pelicula() {//Default COnstructor
+        this.titulo = "Empty Title";
+        this.ano = "DD/MM/YYYY";
+        this.duracion = 0f;
+        this.pais = "La Tierra";
+        this.guion = "Anonimo";
+        this.musica = "ACME";
+        this.fotografia = "ACME";
+        this.productora = "ACME";
+        this.fotografia = "ACME";
+        this.simnosis = "Blank";
+    }
+
+
+
+    //------------------------------------------------------
+    //      Setters and Getters
+
+
+        public ArrayList<Director> getDireccion() {
         return direccion;
     }
 
