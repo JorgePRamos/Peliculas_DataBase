@@ -37,22 +37,24 @@ public class Pelicula {
     //------------------------------------------------------
     //      Setters and Getters
 
-
-        public ArrayList<Director> getDireccion() {
+    public ArrayList<Director> getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(ArrayList<Director> direccion) {
-        this.direccion = direccion;
+    public void addDirector(Director nuevoDirector) {
+       this.direccion.add(nuevoDirector);
     }
 
     public ArrayList<Actor> getReparto() {
         return reparto;
     }
 
-    public void setReparto(ArrayList<Actor> reparto) {
-        this.reparto = reparto;
+    public void addActor(Actor nuevoActor) {
+        this.reparto.add(nuevoActor);
     }
+
+
+    //---------------------------------------------------
 
     public String getTitulo() {
         return titulo;

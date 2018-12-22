@@ -1,8 +1,11 @@
 package controller;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import static java.lang.System.out;
 import model.Model;
+import model.Pelicula;
 
 public class Controller {
     Model m = new Model();
@@ -27,8 +30,9 @@ public class Controller {
             out.printf("No existe pelicuas.bin\n");
             out.printf("Importando peliculas desde pelicuals.txt.\nEspere....\n");
 
+            Path txtPeliPath = Paths.get(ruta +"peliculas.txt" );
+            m.addFilmToCollection(m.import_Pelitxt(txtPeliPath));//importar fichero .txt);
 
-            m.import_txt(File txtPeliPath = new File(ruta +"peliculas.txt" ));//importar fichero .txt
 
 
 
@@ -42,8 +46,8 @@ public class Controller {
             out.printf("No existe actores.bin\n");
             out.printf("Importando actores desde actores.txt.\nEspere....\n");
 
-
-            m.import_txt(File txtActPath = new File(ruta +"actores.txt" ));//importar fichero .txt
+            Path txtActPath = Paths.get(ruta + "actores.txt" );
+            m.import_Acttxt(txtActPath);//importar fichero .txt
 
         }
         //----------------------------------------------------------------------------------------------
@@ -55,8 +59,8 @@ public class Controller {
             out.printf("No existe directores.bin\n");
             out.printf("Importando directores desde directores.txt.\nEspere....\n");
 
-
-            m.import_txt(File txtDirecPath = new File(ruta +"peliculas.txt" ));//importar fichero .txt
+           Path  txtDirecPath = Paths.get(ruta +"peliculas.txt" );
+            m.import_Directxt(txtDirecPath);//importar fichero .txt
 
         }
         //----------------------------------------------------------------------------------------------

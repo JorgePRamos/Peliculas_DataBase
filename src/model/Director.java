@@ -7,7 +7,18 @@ public class Director {
     private String fecha_nac;
     private String nacionalidad;
     private String ocupacion;
-    private ArrayList<Peliculas> obras = new ArrayList();
+    private ArrayList<Pelicula> obras = new ArrayList();
+
+
+
+    public ArrayList<Pelicula> getObras() {
+        return obras;
+    }
+
+    public void addObra(Pelicula nuevaObra) {
+        this.obras.add(nuevaObra);
+    }
+
 
 
     public String getNombre() {
@@ -47,11 +58,4 @@ public class Director {
 
 
 
-    public ArrayList<model.Peliculas> getObras() {
-        return obras;
-    }
-
-    public void setObras(ArrayList<model.Peliculas> obras) {
-        this.obras = obras;
-    }
 }
