@@ -39,11 +39,11 @@ public class View {
                     break;
 
                 case 2:
-                  //  cn.salidaProg();
+                   cn.salidaProg();
                     break;
 
                 case 3:
-                  //  cn.archivo();
+                     cn.archivo();
                     break;
 
                 case 4:

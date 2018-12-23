@@ -2,10 +2,15 @@ package model;
 import static java.lang.System.exit;
 import static java.lang.System.out;
 import model.Filmoteca;
-import java.io.File;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Model {
 
@@ -13,7 +18,7 @@ public class Model {
     String delimiter = "#";
 
 
-//----------------------------------------------------------------------
+    //------------------------------------------------------------------------------------
     //------------- Funciones Peliculas
     public Pelicula import_Pelitxt(Path path){
         List<String> lines = null;
@@ -47,13 +52,13 @@ public class Model {
 
             return peli;
         }
-    //---------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
 
     public void  addFilmToCollection(Pelicula nuevaPeli){
         f.addPeliculaFilmoteca(nuevaPeli);
     }
 
-//-------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
     //------------- Funciones Directores
 
     public Director import_Directxt(Path path){
@@ -83,12 +88,12 @@ public class Model {
 
         return dir;
     }
-    //---------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 
     public void  addDirectorToCollection(Director nuevoDir){
         f.addDirectorGremio(nuevoDir);
     }
-//-------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
 
     //------------- Funciones Actores
 
@@ -118,17 +123,139 @@ public class Model {
 
         return act;
     }
-    //---------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 
     public void  addActorToCollection(Actor nuevoActor){
         f.addActorGremio(nuevoActor);
     }
-//-------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
+
+public  String[] addHtmlRow(){
+        String [] arrayString =  new String[f.getNpeliculas()];
+        for(Pelicula peliTemp : f.getFilmoteca()){
+            String.format("<TR>"
+                            + "<TD>%s</TD>"
+                            + "<TD>%s</TD>"
+                            + "<TD>%f</TD>"
+                            + "<TD>%s</TD>"
+                            + "<TD>%s</TD>"
+                            + "<TD>%s</TD>"
+                            + "<TD>%s</TD>"//7
+                            + "<TD>%s</TD>"
+                            + "<TD>%s</TD>"
+                            + "<TD>%s</TD>"
+                            + "<TD>%s</TD>"
+                            + "</TR>", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getGuion(),
+                    peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getProductora(), peliTemp.getSimnosis(), peliTemp.getDireccion(), peliTemp.getReparto());
+        }
+
+    return arrayString;
+}//addHtmlRow
+
+//-----------------------------------------------------------------------------------
+
+    public void saveFilmsBin(ArrayList<Pelicula> binFilmsList, String direccion ) {
+        Path rutaCarpeta = Paths.get(direccion);
+        //Path p = path al file;
+        //Filmoteca es la clase que vamos a escribir
+        FileOutputStream fos;
+        BufferedOutputStream bos;
+        ObjectOutputStream oos = null;
+
+        try {
+            fos = new FileOutputStream(rutaCarpeta.toFile());
+            bos = new BufferedOutputStream(fos);
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(binFilmsList);
+            oos.close();
+
+        } catch (IOException e) {
+              System.out.println("no fue posible guardar el file");
+            System.out.println(e.toString());
+
+        }
+        /*finally {
+            if(null != oos){
+                try {
+                    oos.close();
+                   }catch (IOException e) {
+                    Logger.getLogger(Filmoteca.class.getName().log(Level.SEVERE,null, e));
+                    //Sustituir por un error normal Da ERROR
+                }
+            }
+        }*/
+    }//Fin Metodo saveFilmsBin
+
+//-----------------------------------------------------------------------------------
 
 
+    public void saveActorBin(ArrayList<Actor> binFilmsList, String direccion ) {
+        Path rutaCarpeta = Paths.get(direccion);
+        //Path p = path al file;
+        //Filmoteca es la clase que vamos a escribir
+        FileOutputStream fos;
+        BufferedOutputStream bos;
+        ObjectOutputStream oos = null;
 
+        try {
+            fos = new FileOutputStream(rutaCarpeta.toFile());
+            bos = new BufferedOutputStream(fos);
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(binFilmsList);
+            oos.close();
 
+        } catch (IOException e) {
+            System.out.println("no fue posible guardar el file");
+            System.out.println(e.toString());
 
+        }
+        /*finally {
+            if(null != oos){
+                try {
+                    oos.close();
+                   }catch (IOException e) {
+                    Logger.getLogger(Filmoteca.class.getName().log(Level.SEVERE,null, e));
+                    //Sustituir por un error normal Da ERROR
+                }
+            }
+        }*/
+    }//Fin Metodo saveActorBin
+
+//-----------------------------------------------------------------------------------
+
+    public void saveDirectorBin(ArrayList<Director> binFilmsList, String direccion ) {
+        Path rutaCarpeta = Paths.get(direccion);
+        //Path p = path al file;
+        //Filmoteca es la clase que vamos a escribir
+        FileOutputStream fos;
+        BufferedOutputStream bos;
+        ObjectOutputStream oos = null;
+
+        try {
+            fos = new FileOutputStream(rutaCarpeta.toFile());
+            bos = new BufferedOutputStream(fos);
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(binFilmsList);
+            oos.close();
+
+        } catch (IOException e) {
+            System.out.println("no fue posible guardar el file");
+            System.out.println(e.toString());
+
+        }
+        /*finally {
+            if(null != oos){
+                try {
+                    oos.close();
+                   }catch (IOException e) {
+                    Logger.getLogger(Filmoteca.class.getName().log(Level.SEVERE,null, e));
+                    //Sustituir por un error normal Da ERROR
+                }
+            }
+        }*/
+    }//Fin Metodo saveDirectorBin
+
+//-----------------------------------------------------------------------------------
 
 
 

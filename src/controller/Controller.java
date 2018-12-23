@@ -1,19 +1,31 @@
 package controller;
 
-import java.io.File;
+import java.io.BufferedWriter;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import static java.lang.System.out;
 import model.Model;
-import model.Pelicula;
-
+import model.Filmoteca;
 public class Controller {
     Model m = new Model();
+    Filmoteca f = new Filmoteca();
+    String ruta = System.getProperty("user.home") +
+                                    "Desktop/Filmot18/";//Raiz carpeta Film18
+    //Path rutaCarpeta = Paths.get(ruta);
+    public void salidaProg(){
+      //  m.saveBin( fimoteca, rutaCarpeta);//crear filmoteca constructor ect
+        m.saveFilmsBin( f.getFilmoteca(), ruta+"peliculas.bin");
+        m.saveActorBin( f.getGremio_actor(), ruta+"peliculas.bin");
+        m.saveDirectorBin( f.getGremio_dir(), ruta+"peliculas.bin");
+    }//Fin Metodo salidaProg
+
+
 
     public void arranque(){
         boolean exist;
-        String ruta = System.getProperty("user.home") +
-                                     "Desktop/Filmot18/";//Raiz carpeta Film18
+        /*String ruta = System.getProperty("user.home") +
+                                     "Desktop/Filmot18/";//Raiz carpeta Film18*///remove if not used lately
 
 
 
@@ -66,8 +78,93 @@ public class Controller {
         //----------------------------------------------------------------------------------------------
 
 
+    }//Fin Metodo Arranque
+
+
+    //---------------------------------------------------------------------------------------------
+public void archivo(){
+
+
+        //--------  HTML    -------
+
+        //--------  HTML_FORMATO    -------
+
+        out.printf("Exportando Peliculas en formato Html a ---> peliculas.html\n");
+        StringBuilder htmlFileSBuilder = new StringBuilder();
+        htmlFileSBuilder.append("<!DOCTYPE html>\n" + "<html>\n");//Head
+        htmlFileSBuilder.append("<body>\n" + "<h2>Basic HTML Table</h2>\n" +
+                                    "<table style=\"width:100%\">");//Body
+        htmlFileSBuilder.append("<tr>\n" +
+            "    <th>Titulo</th>\n" +
+            "    <th>Año</th> \n" +
+            "    <th>Duración</th>\n" +
+            "\t<th>País</th>\n" +
+            "    <th>Guión</th> \n" +
+            "    <th>Música</th>\n" +
+            "\t<th>Fotografía</th>\n" +
+            "    <th>Productora</th> \n" +
+            "    <th>Simnosis</th>\n" +
+            "\t<th>Dirección</th>\n" +
+            "    <th>Reparto</th> \n" +
+            "  </tr>"); //Linea de Campos.
+
+    //--------  HTML_Filas   -------
+
+int n =    f.getNpeliculas();
+for(int x=0;x<n;x++){
+    htmlFileSBuilder.append(m.addHtmlRow());
+   }
+    //--------  HTML_Cierre   -------
+
+      htmlFileSBuilder.append("/table>\n" +
+            "\n" +
+            "</body>\n" +
+            "</html>");
+
+
+
+
+
+
+escribirFichero(htmlFileSBuilder.toString(), "peliculas.html");
+
+
+
+
+
+
+
+
+    //--------  Ficheros_COL    -------
+    out.printf("Exportando Directores en formato Html a ---> directores.html\n");
+
+
+}//Fin Metodo Archivo.
+
+
+
+    public void escribirFichero(String contenido,  String nombreFichero){
+        String tempFile = ruta + nombreFichero;
+        File file = new File(ruta);
+        // if file does exists, then delete and create a new file
+        if (file.exists()) {
+            try {
+                File newFileName = new File(ruta+ " old_" +nombreFichero);
+                file.renameTo(newFileName);
+                file.createNewFile();
+            } catch (Exception e) {
+                out.printf("Error ne la creación de: peliculas.html\n");
+            }
+        }
+try {
+    OutputStream outputStream = new FileOutputStream(file.getAbsoluteFile());
+    Writer writer = new OutputStreamWriter(outputStream);
+    writer.write(contenido);
+    writer.close();
+}catch (Exception e){
+
+    out.printf("Error al escribir:  peliculas.html");
+}
     }
 
-
-
-}
+    }//Fin Controller
