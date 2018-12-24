@@ -8,18 +8,35 @@ public class Actor {
     private  String fecha_nac;
     private String nacionalidad;
     private  String fecha_debut;
-    private ArrayList<Pelicula> feature = new ArrayList();
+    private ArrayList<String> feature = new ArrayList();
 
 
-    public ArrayList<Pelicula> getFeatures() {
+    //------------------------------------------------------
+//---------        Constructors     --------------------
+
+    public Actor() {//Default Constructor
+        this.nombre = "Fulanito de Tal";
+        this.fecha_nac = "DD/MM/YYYY";
+        this.nacionalidad = "La Tierra";
+        this.fecha_debut = "DD/MM/YYYY";
+    }
+
+
+    //------------------------------------------------------
+    // -------     Adders and Getters      -----------------
+
+    public ArrayList<String> getFeatures() {
         return feature;
     }
 
-    public void addFeatured(Pelicula nuevaActuacion) {
+    public void addFeatured(String nuevaActuacion) {
         this.feature.add(nuevaActuacion);
         }
 
 
+
+    //------------------------------------------------------
+    // -------     Setters and Getters      ----------------
     public String getNombre() {
         return nombre;
     }
@@ -52,5 +69,4 @@ public class Actor {
         this.fecha_debut = fecha_debut;
     }
 
-    }
-
+}//Fin clase Actor

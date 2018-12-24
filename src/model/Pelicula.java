@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Pelicula {
 
-    private ArrayList<Director> direccion = new ArrayList();
-    private  ArrayList<Actor> reparto = new ArrayList();
+    private ArrayList<String> direccion = new ArrayList();
+    private  ArrayList<String> reparto = new ArrayList();
     private String titulo;
     private String ano;
     private Float duracion = 0f; //Separados por < . >
@@ -17,7 +17,7 @@ public class Pelicula {
     private String simnosis;
 
 //------------------------------------------------------
-//        Constructors
+//---------        Constructors     --------------------
 
     public Pelicula() {//Default COnstructor
         this.titulo = "Empty Title";
@@ -31,30 +31,30 @@ public class Pelicula {
         this.fotografia = "ACME";
         this.simnosis = "Blank";
     }
-
-
-
     //------------------------------------------------------
-    //      Setters and Getters
+    // -------     Adders and Getters      -----------------
 
-    public ArrayList<Director> getDireccion() {
+    public ArrayList<String> getDireccion() {
         return direccion;
     }
 
-    public void addDirector(Director nuevoDirector) {
+    public void addDirector(String nuevoDirector) {
        this.direccion.add(nuevoDirector);
     }
 
-    public ArrayList<Actor> getReparto() {
+
+    public ArrayList<String> getReparto() {
         return reparto;
     }
 
-    public void addActor(Actor nuevoActor) {
+    public void addActor(String nuevoActor) {
         this.reparto.add(nuevoActor);
     }
 
 
-    //---------------------------------------------------
+
+    //------------------------------------------------------
+    // -------     Setters and Getters      ----------------
 
     public String getTitulo() {
         return titulo;
@@ -127,4 +127,4 @@ public class Pelicula {
     public void setSimnosis(String simnosis) {
         this.simnosis = simnosis;
     }
-}
+}//Fin clase Pelicula

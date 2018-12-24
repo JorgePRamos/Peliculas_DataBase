@@ -43,8 +43,9 @@ public class Model {
             peli.setFotografia(tempString[6]);
             peli.setProductora(tempString[7]);
             peli.setSimnosis(tempString[8]);
-  //          addActor(Actor nuevoActor = tempString[9]);
-//            addDirector(Actor nuevoDirector = tempString[10]);
+            peli.addActor(tempString[9]);
+            peli.addDirector(tempString[10]);
+
 
     }
 
@@ -79,8 +80,7 @@ public class Model {
             dir.setFecha_nac(tempString[1]);
             dir.setNacionalidad(tempString[2]);
             dir.setOcupacion(tempString[3]);
-
-            //         dir.addObra(Pelicula nuevoPeliculas = tempString[4]);
+            dir.addObra(tempString[4]);
 
         }
 
@@ -115,8 +115,7 @@ public class Model {
             act.setFecha_nac(tempString[1]);
             act.setNacionalidad((tempString[2]));
             act.setFecha_debut(tempString[3]);
-            //          addPelicula(Pelicula nuevoPelicula = tempString[4]);
-
+            act.addFeatured(tempString[4]);//son multiples elementos hacer funcion que lo lea separado por \t
         }
 
 

@@ -7,19 +7,32 @@ public class Director {
     private String fecha_nac;
     private String nacionalidad;
     private String ocupacion;
-    private ArrayList<Pelicula> obras = new ArrayList();
+    private ArrayList<String> obras = new ArrayList();
 
 
 
-    public ArrayList<Pelicula> getObras() {
+    //------------------------------------------------------
+//---------        Constructors     --------------------
+
+    public Director() {//Default Constructor
+        this.nombre = "Fulanito de Tal";
+        this.fecha_nac = "DD/MM/YYYY";
+        this.nacionalidad = "La Tierra";
+        this.ocupacion = "Blade Runner Retirado";
+    }
+    //------------------------------------------------------
+    // -------     Adders and Getters      -----------------
+    public ArrayList<String> getObras() {
         return obras;
     }
 
-    public void addObra(Pelicula nuevaObra) {
+    public void addObra(String nuevaObra) {
         this.obras.add(nuevaObra);
     }
 
 
+    //------------------------------------------------------
+    // -------     Setters and Getters      ----------------
 
     public String getNombre() {
         return nombre;
@@ -55,7 +68,4 @@ public class Director {
 
 
 
-
-
-
-}
+}//Fin clase Director
