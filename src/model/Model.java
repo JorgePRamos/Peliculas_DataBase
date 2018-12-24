@@ -2,13 +2,15 @@ package model;
 import static java.lang.System.exit;
 import static java.lang.System.out;
 import model.Filmoteca;
-
+import java.io.FileInputStream;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,20 +22,17 @@ public class Model {
 
     //------------------------------------------------------------------------------------
     //------------- Funciones Peliculas
-    public Pelicula import_Pelitxt(Path path){
-        List<String> lines = null;
-        Pelicula peli  =  new Pelicula();//Def Constructor
-    try {
-        lines = Files.readAllLines(path);
-    }catch (Exception e){
-        out.printf("Error al leer el fichero de texto [pelicuals.txt]\n");
-        exit(-1);
-        }
-
-        for(String ln : lines){
-            String [] tempString = ln.split(delimiter);
-
-
+    public void import_Pelitxt(String path){
+        String[] lines = new String[100];
+        Scanner scanner;
+try{
+        scanner  = new Scanner(new File(path));
+        String line = null;
+        int x = 0;
+        while (scanner.hasNextLine()) {
+            Pelicula peli = new Pelicula();//Def Constructor
+            line = scanner.nextLine();
+            String [] tempString = line.split(delimiter);
             peli.setTitulo(tempString[0]);
             peli.setAno(tempString[1]);
             peli.setDuracion(Float.parseFloat(tempString[2]));
@@ -46,12 +45,17 @@ public class Model {
             peli.addActor(tempString[9]);
             peli.addDirector(tempString[10]);
 
+            f.addPeliculaFilmoteca(peli);
 
-    }
+        }
+} catch(FileNotFoundException e) {
+    System.err.println("Caught FileNotFoundException: " + e.getMessage());
+    throw new RuntimeException(e);
+}
 
 
 
-            return peli;
+          //  return peli;
         }
 //-----------------------------------------------------------------------------------
 
@@ -62,26 +66,31 @@ public class Model {
 //-----------------------------------------------------------------------------------
     //------------- Funciones Directores
 
-    public Director import_Directxt(Path path){
-        List<String> lines = null;
+    public Director import_Directxt( String path){
+        String[] lines = new String[100];
+        BufferedReader br = null;
         Director dir  =  new Director();//Def Constructor
-        try {
-            lines = Files.readAllLines(path);
-        }catch (Exception e){
-            out.printf("Error al leer el fichero de texto [directores.txt]\n");
-            exit(-1);
-        }
-
-        for(String ln : lines){
-            String [] tempString = ln.split(delimiter);
+        try{
+            br = new BufferedReader(new FileReader(path));
+            String line = null;
+            int x = 0;
+            while ((line = br.readLine()) != null) {
+                String [] tempString = line.split(delimiter);
 
 
-            dir.setNombre(tempString[0]);
-            dir.setFecha_nac(tempString[1]);
-            dir.setNacionalidad(tempString[2]);
-            dir.setOcupacion(tempString[3]);
-            dir.addObra(tempString[4]);
+                dir.setNombre(tempString[0]);
+                dir.setFecha_nac(tempString[1]);
+                dir.setNacionalidad(tempString[2]);
+                dir.setOcupacion(tempString[3]);
+                dir.addObra(tempString[4]);
 
+
+            }
+        } catch(FileNotFoundException e) {
+            System.err.println("Caught FileNotFoundException: " + e.getMessage());
+            throw new RuntimeException(e);
+        } catch(IOException e) {
+            System.err.println("Caught IOException: " + e.getMessage());
         }
 
 
@@ -89,7 +98,6 @@ public class Model {
         return dir;
     }
 //------------------------------------------------------------------------------------
-
     public void  addDirectorToCollection(Director nuevoDir){
         f.addDirectorGremio(nuevoDir);
     }
@@ -97,25 +105,31 @@ public class Model {
 
     //------------- Funciones Actores
 
-    public Actor import_Acttxt(Path path){
-        List<String> lines = null;
+    public Actor import_Acttxt(String path){
+        String[] lines = new String[100];
+        BufferedReader br = null;
         Actor act  =  new Actor();//Def Constructor
-        try {
-            lines = Files.readAllLines(path);
-        }catch (Exception e){
-            out.printf("Error al leer el fichero de texto [actores.txt]\n");
-            exit(-1);
-        }
+        try{
+            br = new BufferedReader(new FileReader(path));
+            String line = null;
+            int x = 0;
+            while ((line = br.readLine()) != null) {
+                String [] tempString = line.split(delimiter);
+                act.setNombre(tempString[0]);
+                act.setFecha_nac(tempString[1]);
+                act.setNacionalidad((tempString[2]));
+                act.setFecha_debut(tempString[3]);
+                act.addFeatured(tempString[4]);//son multiples elementos hacer funcion que lo lea separado por \t
 
-        for(String ln : lines){
-            String [] tempString = ln.split(delimiter);
 
 
-            act.setNombre(tempString[0]);
-            act.setFecha_nac(tempString[1]);
-            act.setNacionalidad((tempString[2]));
-            act.setFecha_debut(tempString[3]);
-            act.addFeatured(tempString[4]);//son multiples elementos hacer funcion que lo lea separado por \t
+
+            }
+        } catch(FileNotFoundException e) {
+            System.err.println("Caught FileNotFoundException: " + e.getMessage());
+            throw new RuntimeException(e);
+        } catch(IOException e) {
+            System.err.println("Caught IOException: " + e.getMessage());
         }
 
 
@@ -124,18 +138,21 @@ public class Model {
     }
 //------------------------------------------------------------------------------------
 
+
     public void  addActorToCollection(Actor nuevoActor){
         f.addActorGremio(nuevoActor);
     }
 //-----------------------------------------------------------------------------------
 
-public  String[] addHtmlRow(){
-        String [] arrayString =  new String[f.getNpeliculas()];
-        for(Pelicula peliTemp : f.getFilmoteca()){
-            String.format("<TR>"
+public  String addHtmlRow(){
+        String arrayString;
+        StringBuilder arrayStringBuilder = new StringBuilder();
+
+        for(Pelicula peliTemp : f.estanteria){
+            arrayStringBuilder.append(String.format("<TR>"
                             + "<TD>%s</TD>"
                             + "<TD>%s</TD>"
-                            + "<TD>%f</TD>"
+                            + "<TD>%.1f min1</TD>"
                             + "<TD>%s</TD>"
                             + "<TD>%s</TD>"
                             + "<TD>%s</TD>"
@@ -145,9 +162,9 @@ public  String[] addHtmlRow(){
                             + "<TD>%s</TD>"
                             + "<TD>%s</TD>"
                             + "</TR>", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getGuion(),
-                    peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getProductora(), peliTemp.getSimnosis(), peliTemp.getDireccion(), peliTemp.getReparto());
+                    peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getProductora(), peliTemp.getSimnosis(), peliTemp.getDireccion(), peliTemp.getReparto()));
         }
-
+arrayString = arrayStringBuilder.toString();
     return arrayString;
 }//addHtmlRow
 
@@ -163,13 +180,15 @@ public  String[] addHtmlRow(){
 
         try {
             fos = new FileOutputStream(rutaCarpeta.toFile());
-            bos = new BufferedOutputStream(fos);
-            oos = new ObjectOutputStream(bos);
-            oos.writeObject(binFilmsList);
+            //bos = new BufferedOutputStream(fos);
+            oos = new ObjectOutputStream(fos);
+            for (Pelicula peliTemp : f.estanteria) {
+                oos.writeObject(peliTemp);
+            }
             oos.close();
 
         } catch (IOException e) {
-              System.out.println("no fue posible guardar el file");
+              System.out.println("No fue posible guardar peliculas.bin\n");
             System.out.println(e.toString());
 
         }
@@ -185,7 +204,27 @@ public  String[] addHtmlRow(){
         }*/
     }//Fin Metodo saveFilmsBin
 
-//-----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+    public ArrayList<Pelicula> import_PeliBin(String path){
+        ObjectInputStream ois = null;
+        FileInputStream fis;
+        ArrayList<Pelicula> listaTemp = null;
+        try {
+            fis = new FileInputStream(path);
+             ois = new ObjectInputStream(fis);
+        }catch (Exception e){
+
+            out.printf("NECESITA CONTROL DE ERRORES\n");
+        }
+        //int[] ia = (int[]) (ois.readObject());
+        try{
+       listaTemp =(ArrayList<Pelicula>)  (ois.readObject());
+            ois.close();
+
+        }catch (Exception e){}
+        return listaTemp;
+    }
+    //-----------------------------------------------------------------------------------
 
 
     public void saveActorBin(ArrayList<Actor> binFilmsList, String direccion ) {
@@ -204,7 +243,7 @@ public  String[] addHtmlRow(){
             oos.close();
 
         } catch (IOException e) {
-            System.out.println("no fue posible guardar el file");
+            System.out.println("No fue posible guardar actores.bin\n");
             System.out.println(e.toString());
 
         }
@@ -238,7 +277,7 @@ public  String[] addHtmlRow(){
             oos.close();
 
         } catch (IOException e) {
-            System.out.println("no fue posible guardar el file");
+            System.out.println("No fue posible guardar directores.bin\n");
             System.out.println(e.toString());
 
         }

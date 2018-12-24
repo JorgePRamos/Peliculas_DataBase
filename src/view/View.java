@@ -18,10 +18,10 @@ public class View {
         int contador = 0;
 
         do {
-            System.out.printf("Asi se depura: %d\n", contador);
-             sal = 1;
-            System.out.printf("Seleccione la opcion deseada: \n");
-            System.out.printf("%s\n", menu);
+           // System.out.printf("Asi se depura: %d\n", contador);
+             sal = 0;
+            System.out.printf("\n-------------------------------------------\nSeleccione la opcion deseada: \n");
+            System.out.printf("%s\n>", menu);
             temp = sc.nextLine();
 
             try {
@@ -40,6 +40,7 @@ public class View {
 
                 case 2:
                    cn.salidaProg();
+                   sal = 1;
                     break;
 
                 case 3:
@@ -62,12 +63,13 @@ public class View {
 
 
                 default:
-                    sal = 0;
                     System.out.printf("No se encontró la opcion solicitada\n Reintentando...\n \n");
+                    sal = 0;
                     contador++;
                     break;
             }
         } while (sal == 0);
+
 
     }
 }
