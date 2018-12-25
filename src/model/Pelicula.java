@@ -15,6 +15,7 @@ public class Pelicula implements Serializable{
     private String fotografia;
     private String productora;
     private String simnosis;
+    private  String genero;
 
 //------------------------------------------------------
 //---------        Constructors     --------------------
@@ -55,6 +56,10 @@ public class Pelicula implements Serializable{
 
     //------------------------------------------------------
     // -------     Setters and Getters      ----------------
+
+    public String getGenero() { return genero; }
+
+    public void setGenero(String genero) { this.genero = genero; }
 
     public String getTitulo() {
         return titulo;

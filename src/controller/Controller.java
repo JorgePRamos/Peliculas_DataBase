@@ -151,13 +151,14 @@ public void archivo(){
             "    <th>Año</th> \n" +
             "    <th>Duración</th>\n" +
             "\t<th>País</th>\n" +
-            "    <th>Guión</th> \n" +
-            "    <th>Música</th>\n" +
-            "\t<th>Fotografía</th>\n" +
-            "    <th>Productora</th> \n" +
-            "    <th>Simnosis</th>\n" +
-            "\t<th>Dirección</th>\n" +
-            "    <th>Reparto</th> \n" +
+            "    <th>Direción</th> \n" +
+            "    <th>Guión</th>\n" +
+            "\t<th>Música</th>\n" +
+            "    <th>Fotografía</th> \n" +
+            "    <th>Reparto</th>\n" +
+            "\t<th>Productora</th>\n" +
+            "    <th>Genero</th> \n" +
+                "    <th>Simnosis</th> \n" +
             "  </tr>"); //Linea de Campos.
 
     //--------  HTML_Filas   -------

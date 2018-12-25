@@ -44,13 +44,22 @@ public class Model {
                 peli.setAno(tempString[1]);
                 peli.setDuracion(Float.parseFloat(tempString[2]));
                 peli.setPais(tempString[3]);
-                peli.setGuion(tempString[4]);
-                peli.setMusica(tempString[5]);
-                peli.setFotografia(tempString[6]);
-                peli.setProductora(tempString[7]);
-                peli.setSimnosis(tempString[8]);
-                peli.addActor(tempString[9]);
-                peli.addDirector(tempString[10]);
+                peli.setGuion(tempString[5]);
+                peli.setMusica(tempString[6]);
+                peli.setFotografia(tempString[7]);
+                peli.setProductora(tempString[9]);
+                peli.setGenero(tempString[10]);
+                peli.setSimnosis(tempString[11]);
+
+                String[] actoresArray = tempString[8].split("\t");
+                for(String t : actoresArray){
+                    peli.addActor(t);
+                }//Conjunto de actores
+
+                String[] directoresArray = tempString[4].split("\t");
+                for(String t : directoresArray){
+                    peli.addDirector(t);
+                }//Conjunto de directores.
 
                 f.addPeliculaFilmoteca(peli);
             }
@@ -87,8 +96,12 @@ public class Model {
                 dir.setNombre(tempString[0]);
                 dir.setFecha_nac(tempString[1]);
                 dir.setNacionalidad(tempString[2]);
-                dir.setNacionalidad(tempString[3]);
-                dir.addObra(tempString[4]);
+                dir.setOcupacion(tempString[3]);
+
+                String[] obrasArray = tempString[4].split("\t");
+                for(String t : obrasArray){
+                dir.addObra(t);
+                }//Conjunto deobras
 
                 f.addDirectorGremio(dir);
             }
@@ -125,7 +138,11 @@ public class Model {
                 act.setFecha_nac(tempString[1]);
                 act.setNacionalidad((tempString[2]));
                 act.setFecha_debut(tempString[3]);
-                act.addFeatured(tempString[4]);
+
+                String[] pelisArray = tempString[4].split("\t");
+                for(String t : pelisArray){
+                   act.addFeatured(t);
+                }//Conjunto de trabajos
 
                 f.addActorGremio(act);
             }
@@ -153,7 +170,7 @@ public class Model {
             arrayStringBuilder.append(String.format("<TR>"
                             + "<TD>%s</TD>"
                             + "<TD>%s</TD>"
-                            + "<TD>%.1f min1</TD>"
+                            + "<TD>%.1f min</TD>"
                             + "<TD>%s</TD>"
                             + "<TD>%s</TD>"
                             + "<TD>%s</TD>"
@@ -162,8 +179,9 @@ public class Model {
                             + "<TD>%s</TD>"
                             + "<TD>%s</TD>"
                             + "<TD>%s</TD>"
-                            + "</TR>", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getGuion(),
-                             peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getProductora(), peliTemp.getSimnosis(), peliTemp.getDireccion(), peliTemp.getReparto()));
+                            + "<TD>%s</TD>"
+                            + "</TR>", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getDireccion(),
+                             peliTemp.getGuion(), peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getReparto(), peliTemp.getProductora(), peliTemp.getGenero(), peliTemp.getSimnosis()));
         }
         arrayString = arrayStringBuilder.toString();
         return arrayString;
