@@ -4,10 +4,11 @@ import java.io.BufferedWriter;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+
 import static java.lang.System.out;
-import model.Model;
-import model.Filmoteca;
-import model.Pelicula;
+
+import model.*;
 
 public class Controller {
     Model m = new Model();
@@ -16,10 +17,27 @@ public class Controller {
                                     "/Desktop/Filmot18/";//Raiz carpeta Film18
     //Path rutaCarpeta = Paths.get(ruta);
     public void salidaProg(){
-      //  m.saveBin( fimoteca, rutaCarpeta);//crear filmoteca constructor ect
-        m.saveFilmsBin( f.getFilmoteca(), ruta+"peliculas.bin");
-        m.saveActorBin( f.getGremio_actor(), ruta+"actores.bin");
-        m.saveDirectorBin( f.getGremio_dir(), ruta+"directores.bin");
+
+        /*
+        ArrayList<Pelicula> pil = new ArrayList();
+                pil = m.dameFilmoteca();
+        out.printf("Estoy en salida prog\n");
+        for (Pelicula i : pil) {
+            out.printf("////////    %s\n",i.getTitulo());
+
+
+
+        }*/
+
+
+
+      // m.saveBin( fimoteca, rutaCarpeta);//crear filmoteca constructor ect
+        m.saveFilmsBin( ruta+"peliculas.bin");
+        m.saveActorBin(ruta+"actores.bin");
+        m.saveDirectorBin(ruta +"directores.bin");
+
+
+
         out.printf("Saliendo del programa...\n");
     }//Fin Metodo salidaProg
 
@@ -40,7 +58,11 @@ public class Controller {
 
         if(peliculaPath.exists()){//Comprobamos si existen las los binarios de las Peliculas.
             out.printf("Existe peliculas.bin\n");
-            m.import_PeliBin(ruta + "peliculas.bin");
+           ArrayList<Pelicula> pt = (m.import_PeliBin(ruta + "peliculas.bin"));
+           for(Pelicula o : pt){
+               m.addFilmToCollection(o);
+
+           }
 
         }else{//No exixte binario pelicuas.
             out.printf("No existe pelicuas.bin\n");
@@ -59,6 +81,11 @@ public class Controller {
 
         if(actoresPath.exists()){//Comprobamos si existen las los binarios de las Actores.
             System.out.printf("Existe actores.bin\n");
+            ArrayList<Actor> pt = (m.import_ActBin(ruta + "actores.bin"));
+            for(Actor o : pt){
+                m.addActorToCollection(o);
+
+            }
 
         }else{//No exixte binario actores.
             out.printf("No existe actores.bin\n");
@@ -72,7 +99,11 @@ public class Controller {
 
         if(directoresPath.exists()){//Comprobamos si existen las los binarios de las Directores.
             System.out.printf("Existe directores.bin\n");
+            ArrayList<Director> pt = (m.import_DirBin(ruta + "directores.bin"));
+            for(Director o : pt){
+                m.addDirectorToCollection(o);
 
+            }
         }else{//No exixte binario directores.
             out.printf("No existe directores.bin\n");
             out.printf("Importando directores desde directores.txt.\nEspere....\n");
