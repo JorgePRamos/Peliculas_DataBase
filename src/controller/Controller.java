@@ -225,7 +225,10 @@ try {
 }
     }
 
-    //--------------------------------------------------------
+
+//---------------------------------------------------------------------------------
+    //-------------------   Consultas Peliculas ----------------------------------
+//---------------------------------------------------------------------------------
 
 public void altaPelicula(){
 
@@ -322,8 +325,6 @@ public void altaPelicula(){
 
 
 
-
-
     }//Fin Metodo Bajas Peliculas
 
     //------------------------------------------------------
@@ -346,8 +347,93 @@ public void altaPelicula(){
    }
 
 
+//---------------------------------------------------------------------------------
+
+    //---------------------------------------------------------------------------------
+    //-------------------   Consultas Directores ----------------------------------
+//---------------------------------------------------------------------------------
+
+    public void altaDirector(){
+
+        Scanner sc = new Scanner(System.in);
+        Director directorIntroducida = new Director();
+        String tempArrayList;
+
+        ArrayList<String> obras = new ArrayList();
+        tempArrayList = readString("Introduzca el/los nombres de las obras separadas por < , >\n");
+        String[] tempObras = tempArrayList.split(",");
+        for(String t : tempObras){
+            directorIntroducida.addObra(t);
+        }//Conjunto de obras
 
 
+
+        String nombre = "-";
+        nombre = readString("Introduzca el nombre del director.\n");
+        directorIntroducida.setNombre(nombre);
+
+        String fecha_nac = "-";
+        fecha_nac = readString("Introduzca la fecha de nacimiento\n");
+        directorIntroducida.setFecha_nac(fecha_nac);
+
+
+        String nacionalidad = "-";
+        nacionalidad = readString("Introduzca la nacionalidad\n");
+        directorIntroducida.setNacionalidad(nacionalidad);
+
+        String ocupacion = "-";
+        ocupacion = readString("Introduzca la ocupación\n");
+        directorIntroducida.setOcupacion(ocupacion);
+
+
+        boolean exixtencia = m.existeDirector(directorIntroducida);
+        if (exixtencia == false) {
+            m.addDirectorToCollection(directorIntroducida);
+        }
+
+       // m.buscarObraYañadir(directorIntroducida);
+
+
+
+
+
+    }//Fin altaPelicula
+
+
+    //--------------------------------------------------------
+
+    public  void  bajasDirector(){
+
+        String nombreDirectorObjetivo;
+        nombreDirectorObjetivo = readString("Introduzca el nombre del director que desea borrar\n");
+        Director directorBuscar = new Director();
+
+        directorBuscar.setNombre(nombreDirectorObjetivo);
+
+        if (m.existeDirector(directorBuscar) == false){
+            out.printf("El director %s introducido no se encuentra en la bases de datos.\n", nombreDirectorObjetivo);
+
+        }else{
+            m.borrarDirector(nombreDirectorObjetivo);
+
+        }
+
+
+
+    }//Fin Metodo Bajas Peliculas
+
+    //------------------------------------------------------
+    //------------------------------------------------------
+    public  void modDirector(){
+        String nombreDirectorObejetivo;
+        nombreDirectorObejetivo = readString("Introduzca el nombre del director que desea modificar\n");
+
+        m.modDirector(nombreDirectorObejetivo);
+
+
+    }//Fin Metodo modDirectores
+
+    //------------------------------------------------------
 
 
 

@@ -98,7 +98,52 @@ public class View {
                     break;
 
                 case 5:
-                  //  cn.directores();
+                    String[] opDirectores = new String[]{"1", "2", "3","4"};
+                    String tempDirectores = null;
+                    String menuDirectores = (" 1) Altas\n 2) Bajas\n 3) Modificaciones\n 4) Atras\n");
+                    int selecDirectores = 0;
+                    int salidaDirectores;
+
+
+                    do {
+                        // System.out.printf("Asi se depura: %d\n", contador);
+                        salidaDirectores = 0;
+                        System.out.printf("\n-------------------------------------------\nSeleccione la opcion deseada: \n");
+                        System.out.printf("%s\n>", menuDirectores);
+                        tempDirectores = sc.nextLine();
+
+                        try {
+                            selecDirectores = Integer.parseInt(tempDirectores);
+
+                        } catch (Exception e) {
+                            System.out.printf("SE PRODUJO UN ERROR EN LA INTRODUCCION DE LOS DATOS\n saliendo.... \n");
+                            System.exit(-1);
+                        }
+
+                        switch (selecDirectores){
+                            case 1:
+                                cn.altaDirector();
+                                break;
+                            case 2:
+                                cn.bajasDirector();
+                                break;
+                            case 3:
+                                cn.modDirector();
+                                break;
+                            case 4:
+                                salidaDirectores = 1;
+                                break;
+
+                            default:
+                                System.out.printf("No se encontró la opcion solicitada\n Reintentando...\n \n");
+                                salidaDirectores= 0;
+
+
+                        }
+                    }while(salidaDirectores == 0);
+
+
+
                     break;
                 case 6:
                   //  cn.actores();

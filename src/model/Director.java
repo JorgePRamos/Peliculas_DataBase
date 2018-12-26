@@ -7,7 +7,7 @@ public class Director {
     private String fecha_nac;
     private String nacionalidad;
     private String ocupacion;
-    private ArrayList<String> obras = new ArrayList();
+     ArrayList<String> obras = new ArrayList();
 
 
 

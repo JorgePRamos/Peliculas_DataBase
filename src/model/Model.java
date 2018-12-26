@@ -188,6 +188,7 @@ public class Model {
             }
         }
 
+
     }//Fin modificacion
     //------------------------------------------------------------------------------------
 
@@ -270,6 +271,7 @@ public class Model {
         //borramos Pelicula
         f.borrarPeliculaFilmoteca(indexPelicula);
         out.printf("La pelicula y sus relaciones han sido borradas\n");
+
 
     }
     //------------------------------------------------------------------------------------
@@ -364,6 +366,7 @@ public class Model {
                 }
 
             }
+
             if (exitencia == false){
                 out.printf("No se encontró el director\nAñadiendo %s a directores...\n", nombre);
 
@@ -377,6 +380,9 @@ public class Model {
 
         return exitencia;
        }
+    //------------------------------------------------------------------------------------
+
+
     //------------------------------------------------------------------------------------
 
     public int buscarDirector(String nombreObjetivo){
@@ -413,6 +419,93 @@ public class Model {
     }
 
 
+    //------------------------------------------------------------------------------------
+    public void borrarDirector(String directorObjetivo) {
+
+        boolean borrable = true;
+        int indexDirector = buscarDirector(directorObjetivo);
+        //Buscamos Peliculas
+        for (String ta : f.gremio_dir.get(indexDirector).obras) {
+            int x = 0;
+            for ( Pelicula ac : f.estanteria){
+                if(ta.equals(ac.getTitulo())){
+
+                borrable = false;
+                }
+                x++;
+            }
+        }
+
+
+        //borramos director si no tiene relaciones
+        if(borrable) {
+            f.borrarDirectorGremio(indexDirector);
+            out.printf("El director y sus relaciones han sido borrados\n");
+        }else{
+            out.printf("El director no se pudo borrar debido a sus relaciones");
+        }
+
+
+    }
+    //------------------------------------------------------------------------------------
+
+
+    //------------------------------------------------------------------------------------
+    public void  modDirector(String nombreDirector){
+        Scanner sc = new Scanner(System.in);
+        String[] opMod = new String[]{"1", "2", "3"};
+        String tempOpciones = null;
+        String menuMod = ("1) Fecha Nacimiento\n 2) Nacionalidad\n 3) Ocupación\n");
+        int selecPeliculas = 0;
+        int salidaPeliculas;
+        String mod =null;
+
+        for (Director pl : f.gremio_dir) {
+            if (nombreDirector.equals(pl.getNombre())) {
+
+
+                do {
+                    salidaPeliculas = 0;
+                    System.out.printf("\n-------------------------------------------\nSeleccione la opcion de modificación deseada: \n");
+                    System.out.printf("%s\n>", menuMod);
+                    tempOpciones = sc.nextLine();
+
+                    try {
+                        selecPeliculas = Integer.parseInt(tempOpciones);
+
+                    } catch (Exception e) {
+                        System.out.printf("SE PRODUJO UN ERROR EN LA INTRODUCCION DE LOS DATOS\n saliendo.... \n");
+                        System.exit(-1);
+                    }
+
+                    switch (selecPeliculas) {
+                        case 1:
+                            mod = readString("Introduzca la nueva fecha de nacimiento:   ");
+                            pl.setNombre(mod);
+                            break;
+                        case 2:
+                            mod = readString("Introduzca la nueva ocupación:   ");
+                            pl.setFecha_nac(mod);
+                            break;
+                        case 3:
+                            mod = readString("Introduzca la nueva duración:   ");
+                            pl.setNacionalidad(mod);
+                            break;
+
+
+                        default:
+                            System.out.printf("No se encontró la opcion solicitada\n Reintentando...\n \n");
+                            salidaPeliculas = 0;
+
+
+                    }
+                } while (salidaPeliculas == 0);
+            }
+        }
+
+
+    }//Fin modificacion
+    //------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------
     //-------------     Funciones Actores       ------------------------------------------
     public void import_Acttxt(String path){

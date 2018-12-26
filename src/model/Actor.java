@@ -8,7 +8,7 @@ public class Actor {
     private  String fecha_nac;
     private String nacionalidad;
     private  String fecha_debut;
-    private ArrayList<String> feature = new ArrayList();
+     ArrayList<String> feature = new ArrayList();
 
 
     //------------------------------------------------------
