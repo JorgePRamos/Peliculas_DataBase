@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.io.Serializable;
 public class Pelicula implements Serializable{
     private static final long serialVersionUID = 1L;
-    private ArrayList<String> direccion = new ArrayList();
-    private  ArrayList<String> reparto = new ArrayList();
+     ArrayList<String> direccion = new ArrayList();
+      ArrayList<String> reparto = new ArrayList();
     private String titulo;
     private String ano;
     private Float duracion = 0f; //Separados por < . >
@@ -44,6 +44,15 @@ public class Pelicula implements Serializable{
     }
 
 
+    public  void borrarDirector(int index){
+        this.direccion.remove(index);
+
+    }
+    public void borrarTodaDireccion (){
+        this.direccion.removeAll(direccion);
+
+    }
+
     public ArrayList<String> getReparto() {
         return reparto;
     }
@@ -52,7 +61,15 @@ public class Pelicula implements Serializable{
         this.reparto.add(nuevoActor);
     }
 
+    public  void borrarActor(int index){
+        this.reparto.remove(index);
 
+    }
+
+    public void borrarTodaCasting (){
+        this.reparto.removeAll(reparto);
+
+    }
 
     //------------------------------------------------------
     // -------     Setters and Getters      ----------------

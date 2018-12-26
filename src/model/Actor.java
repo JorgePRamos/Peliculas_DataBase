@@ -35,6 +35,11 @@ public class Actor {
 
 
 
+    public  void borrarFeature(int index){
+        this.feature.remove(index);
+
+    }
+
     //------------------------------------------------------
     // -------     Setters and Getters      ----------------
     public String getNombre() {

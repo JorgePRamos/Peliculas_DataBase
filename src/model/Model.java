@@ -1,6 +1,4 @@
 package model;
-import static java.lang.System.exit;
-import static java.lang.System.out;
 import model.Filmoteca;
 import java.io.FileInputStream;
 import java.io.*;
@@ -9,11 +7,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static com.coti.tools.Esdia.readFloat;
+import static com.coti.tools.Esdia.readString;
 
+import static java.lang.System.*;
 
 
 public class Model {
@@ -68,11 +70,241 @@ public class Model {
             throw new RuntimeException(e);
         }
 
+        /*
+        int n = 0;
+        for (Pelicula pl : f.estanteria){
+            out.printf("**********Estoy intentando modifica el padrino**********\n");
+            out.printf("***********     Este es <%s>      ***********\n", pl.getTitulo());
+            String titulo = "El padrino";
+            String pelicualActual = pl.getTitulo();
+            if(titulo.equals(pl.getTitulo())){
+                out.printf("************    Encontre al padrino %d  *********\n", n);
+                pl.setTitulo("El tontino2");
+            }
+            n++;
+
+        }
+        */
     }//Fin Metodo importPeli
 
     //------------------------------------------------------------------------------------
     public void  addFilmToCollection(Pelicula nuevaPeli){
         f.addPeliculaFilmoteca(nuevaPeli);
+    }
+    //------------------------------------------------------------------------------------
+    public void  modPelicula(String nombrePelicula){
+        Scanner sc = new Scanner(System.in);
+        String[] opMod = new String[]{"1", "2", "3","4","5","6","7","8","9","10","11","12"};
+        String tempOpciones = null;
+        String menuMod = (" 1) Titulo\n 2) Año\n 3) Duración\n 4) País\n 5) Dirección\n 6) Guion\n 7) Música\n 8) Fotogrfía\n 9) Reparto\n 10) Productora\n 11) Género\n 12) Simnosis\n");
+        int selecPeliculas = 0;
+        int salidaPeliculas;
+        String mod =null;
+
+        for (Pelicula pl : f.estanteria) {
+            if (nombrePelicula.equals(pl.getTitulo())) {
+
+
+                do {
+                    salidaPeliculas = 0;
+                    System.out.printf("\n-------------------------------------------\nSeleccione la opcion de modificación deseada: \n");
+                    System.out.printf("%s\n>", menuMod);
+                    tempOpciones = sc.nextLine();
+
+                    try {
+                        selecPeliculas = Integer.parseInt(tempOpciones);
+
+                    } catch (Exception e) {
+                        System.out.printf("SE PRODUJO UN ERROR EN LA INTRODUCCION DE LOS DATOS\n saliendo.... \n");
+                        System.exit(-1);
+                    }
+
+                    switch (selecPeliculas) {
+                        case 1:
+                            mod = readString("Introduzca el nuevo título:   ");
+                            pl.setTitulo(mod);
+                            break;
+                        case 2:
+                            mod = readString("Introduzca el nuevo año:   ");
+                            pl.setAno(mod);
+                            break;
+                        case 3:
+                            mod = readString("Introduzca la nueva duración:   ");
+                            float fmod = Float.parseFloat(mod);
+                            pl.setDuracion(fmod);
+                            break;
+                        case 4:
+                            mod = readString("Introduzca el nuevo País:   ");
+                            pl.setPais(mod);
+                            break;
+                        case 5:
+                            mod = readString("Introduzca el/los nombres de los directores separados por < , >\n");
+                            String[] tempDirectores = mod.split(",");
+                            pl.borrarTodaDireccion();
+                            for(String t : tempDirectores){
+                                pl.addDirector(t);
+                            }//Conjunto de directores
+                            break;
+                        case 6:
+                            mod = readString("Introduzca el nuevo autor del guión:   ");
+                            pl.setGuion(mod);
+                            break;
+                        case 7:
+                            mod = readString("Introduzca el nuevo autor de la banda sonora:   ");
+                            pl.setMusica(mod);
+                            break;
+                        case 8:
+                            mod = readString("Introduzca el nuevo director de fotografía:   ");
+                            pl.setFotografia(mod);
+                            break;
+                        case 9:
+                            mod = readString("Introduzca los nombres de los actores separados por < , >\n");
+                            String[] tempActores = mod.split(",");
+                            pl.borrarTodaCasting();
+                            for(String t : tempActores){
+                                pl.addActor(t);
+                            }//Conjunto de directores
+                            break;
+                        case 10:
+                            mod = readString("Introduzca la nueva productora:   ");
+                            pl.setProductora(mod);
+                            break;
+                        case 11:
+                            mod = readString("Introduzca el nuevo Género:   ");
+                            pl.setGenero(mod);
+                            break;
+                        case 12:
+                            mod = readString("Introduzca la nueva simnosis:   ");
+                            pl.setSimnosis(mod);
+                            break;
+
+                        default:
+                            System.out.printf("No se encontró la opcion solicitada\n Reintentando...\n \n");
+                            salidaPeliculas = 0;
+
+
+                    }
+                } while (salidaPeliculas == 0);
+            }
+        }
+
+    }//Fin modificacion
+    //------------------------------------------------------------------------------------
+
+    public  void  mostrarPelicula(String peliObjetivo){
+
+        String arrayString = null;
+        String tableString = null;
+        StringBuilder arrayStringBuilder = new StringBuilder();
+        StringBuilder tableBuilder = new StringBuilder();
+
+        tableBuilder.append(
+                "    Titulo" +
+                "    Año" +
+                "    Duración" +
+                "    País" +
+                "    Direción" +
+                "    Guión" +
+                "    Música" +
+                "    Fotografía" +
+                "    Reparto" +
+                "    Productora" +
+                "    Genero" +
+                "    Simnosis\n"); //Linea de Campos.
+        tableString = tableBuilder.toString();
+        out.printf("|%s|", tableString);
+
+        for (Pelicula peliTemp : f.estanteria) {
+            if (peliObjetivo.equals(peliTemp.getTitulo())) {
+
+                    arrayStringBuilder.append(String.format(
+                            "%30s\n"
+                                    + "%30s\n"
+                                    + "%20.1f min\n"
+                                    + "%30s\n"
+                                    + "%30s\n"
+                                    + "%30s\n"
+                                    + "%30s\n"//7
+                                    + "%30s\n"
+                                    + "%30s\n"
+                                    + "%30s\n"
+                                    + "%30s\n"
+                                    + "%30s\n", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getDireccion(),
+                            peliTemp.getGuion(), peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getReparto(), peliTemp.getProductora(), peliTemp.getGenero(), peliTemp.getSimnosis()));
+                }
+                arrayString = arrayStringBuilder.toString();
+
+
+        }
+        out.printf("|%s|", arrayString);
+    }//Fin Metodo mostrarPelicula
+
+
+    //------------------------------------------------------------------------------------
+    public void borrarPelicula(String peliculaObjetivo) {
+
+        int indexPelicula = buscarPelicula(peliculaObjetivo);
+        //buscamos actores
+        for (String ta : f.estanteria.get(indexPelicula).reparto) {
+            int x = 0;
+            for ( Actor ac : f.gremio_actor){
+                if(ta.equals(ac.getNombre())){
+                    ac.borrarFeature(x);
+
+                }
+                x++;
+            }
+        }
+
+        //buscamos directores
+        for (String da : f.estanteria.get(indexPelicula).direccion) {
+            int y = 0;
+            for ( Director dir : f.gremio_dir){
+                if(da.equals(dir.getNombre())){
+                    dir.borrarObra(y);
+
+                }
+                y++;
+            }
+        }
+        //borramos Pelicula
+        f.borrarPeliculaFilmoteca(indexPelicula);
+        out.printf("La pelicula y sus relaciones han sido borradas\n");
+
+    }
+    //------------------------------------------------------------------------------------
+    public int buscarPelicula(String peliculaObjetivo){
+        int index = 0;
+        for(Pelicula pl : f.getFilmoteca()){
+            if(peliculaObjetivo.equals(pl.getTitulo())){
+
+                out.printf("Pelicula Encontrada, con index %d \n", index);
+
+
+            }
+            index++;
+
+        }
+
+        return  index;
+    }
+
+
+    //------------------------------------------------------------------------------------
+    public boolean existePelicula(Pelicula peliculaObjetivo){
+
+        boolean exitencia = false;
+
+            for(Pelicula pl : f.getFilmoteca()){
+                if(peliculaObjetivo.getTitulo().equals(pl.getTitulo())){
+
+                    out.printf("Pelicula Encontrada\n");
+                    exitencia = true;
+                }
+
+            }
+
+            return exitencia;
     }
 
 
@@ -115,6 +347,71 @@ public class Model {
     public void  addDirectorToCollection(Director nuevoDir){
         f.addDirectorGremio(nuevoDir);
     }
+    //------------------------------------------------------------------------------------
+       public boolean buscarDirectorYañadir(Pelicula peliculaObjetivo){
+
+        boolean exitencia = false;
+
+
+        for (String nombre : peliculaObjetivo.direccion){
+            for(Director dir : f.gremio_dir){
+                if(nombre.equals(dir.getNombre())){
+
+                    out.printf("Director encontrado\n");
+                    out.printf("Añadiendo %s a sus obras...\n", peliculaObjetivo.getTitulo());
+                    dir.addObra(peliculaObjetivo.getTitulo());
+                    exitencia = true;
+                }
+
+            }
+            if (exitencia == false){
+                out.printf("No se encontró el director\nAñadiendo %s a directores...\n", nombre);
+
+                Director nuevoDirector = new Director();
+                 nuevoDirector.setNombre(nombre);
+                addDirectorToCollection(nuevoDirector);
+            }
+        }
+
+
+
+        return exitencia;
+       }
+    //------------------------------------------------------------------------------------
+
+    public int buscarDirector(String nombreObjetivo){
+        int index = 0;
+        for(Director dr : f.getGremio_dir()){
+            if(nombreObjetivo.equals(dr.getNombre())){
+
+                out.printf("Director encontrado, index %d\n", index);
+
+
+            }
+            index++;
+
+        }
+
+        return  index;
+    }
+    //------------------------------------------------------------------------------------
+
+    public boolean existeDirector(Director nombre){
+
+        boolean exitencia = false;
+
+        for(Director dr : f.getGremio_dir()){
+            if(nombre.getNombre().equals(dr.getNombre())){
+
+                out.printf("Director encontrado\n");
+                exitencia = true;
+            }
+
+        }
+
+        return exitencia;
+    }
+
 
     //------------------------------------------------------------------------------------
     //-------------     Funciones Actores       ------------------------------------------
@@ -157,6 +454,69 @@ public class Model {
     //------------------------------------------------------------------------------------
     public void  addActorToCollection(Actor nuevoActor){
         f.addActorGremio(nuevoActor);
+    }
+    //------------------------------------------------------------------------------------
+    public boolean buscarRepartoYañadir(Pelicula peliculaObjetivo){
+
+        boolean exitencia = false;
+
+        for (String nombre : peliculaObjetivo.reparto){
+            for(Actor ac : f.gremio_actor){
+                if(nombre.equals(ac.getNombre())){
+
+                    out.printf("Actor encontrado\n");
+                    out.printf("Añadiendo %s a sus Trabajos...\n", peliculaObjetivo.getTitulo());
+                    ac.addFeatured(peliculaObjetivo.getTitulo());
+                    exitencia = true;
+                }
+
+            }
+            if (exitencia == false){
+                out.printf("No se encontró el actor\nAñadiendo %s a Actores...\n", nombre);
+
+                Actor nuevoActor = new Actor();
+                nuevoActor.setNombre(nombre);
+                addActorToCollection(nuevoActor);
+            }
+        }
+
+
+
+        return exitencia;
+    }
+    //------------------------------------------------------------------------------------
+
+    public int buscarActor(String nombreObjetivo){
+        int index = 0;
+        for(Actor ac : f.getGremio_actor()){
+            if(nombreObjetivo.equals(ac.getNombre())){
+
+                out.printf("Actpr encontrado, index %d\n", index);
+
+
+            }
+            index++;
+
+        }
+
+        return  index;
+    }
+
+    //------------------------------------------------------------------------------------
+    public boolean existeActor(Actor nombre){
+
+        boolean exitencia = false;
+
+        for(Actor ac : f.getGremio_actor()){
+            if(nombre.getNombre().equals(ac.getNombre())){
+
+                out.printf("Actor encontrado\n");
+                exitencia = true;
+            }
+
+        }
+
+        return exitencia;
     }
 
     //------------------------------------------------------------------------------------

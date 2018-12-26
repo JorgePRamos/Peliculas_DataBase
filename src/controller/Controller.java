@@ -5,6 +5,10 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import static com.coti.tools.Esdia.readFloat;
+import static com.coti.tools.Esdia.readString;
 
 import static java.lang.System.out;
 
@@ -220,5 +224,138 @@ try {
     System.out.println(e.toString());
 }
     }
+
+    //--------------------------------------------------------
+
+public void altaPelicula(){
+
+    Scanner sc = new Scanner(System.in);
+    Pelicula peliculaIntroducida = new Pelicula();
+    String tempArrayList;
+
+     ArrayList<String> direccion = new ArrayList();
+    tempArrayList = readString("Introduzca el/los nombres de los directores separados por < , >\n");
+        String[] tempDirectores = tempArrayList.split(",");
+             for(String t : tempDirectores){
+              peliculaIntroducida.addDirector(t);
+             }//Conjunto de directores
+
+     ArrayList<String> reparto = new ArrayList();
+    tempArrayList = readString("Introduzca los nombres de los miembros del reparto separados por < , >\n");
+    String[] tempActores = tempArrayList.split(",");
+    for(String t : tempActores){
+        peliculaIntroducida.addActor(t);
+    }//Conjunto de actores
+
+     String titulo = "-";
+        titulo = readString("Introduzca el titulo de la obra.\n");
+        peliculaIntroducida.setTitulo(titulo);
+
+     String ano = "-";
+        ano = readString("Introduzca el año de producción\n");
+        peliculaIntroducida.setAno(ano);
+
+     Float duracion = 0f; //Separados por < . >
+         duracion = readFloat("Introduzca la duración\n");
+         peliculaIntroducida.setDuracion(duracion);
+
+     String pais = "-";
+        pais = readString("Introduzca la nacionalidad\n");
+        peliculaIntroducida.setPais(pais);
+
+     String guion = "-";
+          guion = readString("Introduzca el autor del guión\n");
+        peliculaIntroducida.setGuion(guion);
+
+     String musica = "-";
+         musica = readString("Introduzca el autor de la banda sonora\n");
+        peliculaIntroducida.setMusica(musica);
+
+     String fotografia = "-";
+         fotografia = readString("Introduzca el nombre del director de fotografía\n");
+        peliculaIntroducida.setFotografia(fotografia);
+
+     String productora = "-";
+        productora = readString("Introduzca el nombre de la productora\n");
+        peliculaIntroducida.setProductora(productora);
+
+     String simnosis = "---";
+        simnosis = readString("Introduzca la simnosis\n");
+        peliculaIntroducida.setSimnosis(simnosis);
+
+    String genero = "---";
+    genero = readString("Introduzca el genero\n");
+        peliculaIntroducida.setGenero(genero);
+
+
+    boolean exixtencia = m.existePelicula(peliculaIntroducida);
+    if (exixtencia == false) {
+        m.addFilmToCollection(peliculaIntroducida);
+    }
+
+    m.buscarDirectorYañadir(peliculaIntroducida);
+
+    m.buscarRepartoYañadir(peliculaIntroducida);
+
+
+
+
+}//Fin altaPelicula
+
+    //--------------------------------------------------------
+
+    public  void  bajasPelicula(){
+
+        String nombrePeliculaObejetivo;
+        nombrePeliculaObejetivo = readString("Introduzca el nombre de la película que desea borrar\n");
+        Pelicula peliabuscar = new Pelicula();
+
+        peliabuscar.setTitulo(nombrePeliculaObejetivo);
+
+        if (m.existePelicula(peliabuscar) == false){
+            out.printf("La pelicula %s introducida no se encuentra en la bases de datos.\n", nombrePeliculaObejetivo);
+
+        }else{
+            m.borrarPelicula(nombrePeliculaObejetivo);
+
+    }
+
+
+
+
+
+    }//Fin Metodo Bajas Peliculas
+
+    //------------------------------------------------------
+    public  void modPeliculas(){
+        String nombrePeliculaObejetivo;
+        nombrePeliculaObejetivo = readString("Introduzca el nombre de la película que desea modificar\n");
+
+        m.modPelicula(nombrePeliculaObejetivo);
+
+
+    }//Fin Metodo modPeliculas
+
+    //------------------------------------------------------
+   public  void mostrarPelicula(){
+
+       String nombrePeliculaObejetivo;
+       nombrePeliculaObejetivo = readString("Introduzca el nombre de la película que desea mostrar\n");
+        m.mostrarPelicula(nombrePeliculaObejetivo);
+
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }//Fin Controller

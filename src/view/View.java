@@ -17,6 +17,7 @@ public class View {
         int sal;
         int contador = 0;
 
+
         do {
            // System.out.printf("Asi se depura: %d\n", contador);
              sal = 0;
@@ -48,7 +49,52 @@ public class View {
                     break;
 
                 case 4:
-                   // cn.peliculas();
+                    String[] opPeliculas = new String[]{"1", "2", "3","4","5"};
+                    String tempPeliculas = null;
+                    String menuPelicuals = (" 1) Altas\n 2) Bajas\n 3) Modificaciones\n 4) Consultas\n 5) Atras\n");
+                    int selecPeliculas = 0;
+                    int salidaPeliculas;
+
+
+                    do {
+                        // System.out.printf("Asi se depura: %d\n", contador);
+                        salidaPeliculas = 0;
+                        System.out.printf("\n-------------------------------------------\nSeleccione la opcion deseada: \n");
+                        System.out.printf("%s\n>", menuPelicuals);
+                        tempPeliculas = sc.nextLine();
+
+                        try {
+                            selecPeliculas = Integer.parseInt(tempPeliculas);
+
+                        } catch (Exception e) {
+                            System.out.printf("SE PRODUJO UN ERROR EN LA INTRODUCCION DE LOS DATOS\n saliendo.... \n");
+                            System.exit(-1);
+                        }
+
+                        switch (selecPeliculas){
+                            case 1:
+                                cn.altaPelicula();
+                                break;
+                            case 2:
+                                cn.bajasPelicula();
+                                break;
+                            case 3:
+                                cn.modPeliculas();
+                                break;
+                            case 4:
+                                cn.mostrarPelicula();
+                                break;
+                            case 5:
+                                salidaPeliculas = 1;
+                                break;
+
+                                default:
+                                    System.out.printf("No se encontró la opcion solicitada\n Reintentando...\n \n");
+                                    salidaPeliculas= 0;
+
+
+                        }
+                    }while(salidaPeliculas == 0);
                     break;
 
                 case 5:
@@ -66,7 +112,7 @@ public class View {
                     System.out.printf("No se encontró la opcion solicitada\n Reintentando...\n \n");
                     sal = 0;
                     contador++;
-                    break;
+
             }
         } while (sal == 0);
 

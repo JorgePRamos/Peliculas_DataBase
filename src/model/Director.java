@@ -31,6 +31,11 @@ public class Director {
     }
 
 
+    public  void borrarObra(int index){
+        this.obras.remove(index);
+
+    }
+
     //------------------------------------------------------
     // -------     Setters and Getters      ----------------
 
