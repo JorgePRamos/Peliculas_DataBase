@@ -146,8 +146,53 @@ public class View {
 
                     break;
                 case 6:
-                  //  cn.actores();
-                    break;
+                    String[] opActores = new String[]{"1", "2", "3","4","5"};
+                    String tempActores = null;
+                    String menuActores = (" 1) Altas\n 2) Bajas\n 3) Modificaciones\n 4) Consultas\n 5) Atras\n");
+                    int selecActores = 0;
+                    int salidaActores;
+
+
+                    do {
+                        salidaActores = 0;
+                        System.out.printf("\n-------------------------------------------\nSeleccione la opcion deseada: \n");
+                        System.out.printf("%s\n>", menuActores);
+                        tempActores = sc.nextLine();
+
+                        try {
+                            selecActores = Integer.parseInt(tempActores);
+
+                        } catch (Exception e) {
+                            System.out.printf("SE PRODUJO UN ERROR EN LA INTRODUCCION DE LOS DATOS\n saliendo.... \n");
+                            System.exit(-1);
+                        }
+
+                        switch (selecActores){
+                            case 1:
+                                cn.altaActor();
+                                break;
+                            case 2:
+                                cn.bajasActor();
+                                break;
+                            case 3:
+                                cn.modActor();
+                                break;
+                            case 4:
+                                cn.mostrarActor();
+                                break;
+                            case 5:
+                                salidaActores = 1;
+                                break;
+
+                            default:
+                                System.out.printf("No se encontró la opcion solicitada\n Reintentando...\n \n");
+                                salidaActores= 0;
+
+
+                        }
+                    }while(salidaActores == 0);
+
+                break;
                 case 7:
                  //   cn.listados();
                     break;

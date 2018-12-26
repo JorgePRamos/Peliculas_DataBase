@@ -346,7 +346,6 @@ public void altaPelicula(){
 
    }
 
-
 //---------------------------------------------------------------------------------
 
     //---------------------------------------------------------------------------------
@@ -402,6 +401,7 @@ public void altaPelicula(){
 
     //--------------------------------------------------------
 
+
     public  void  bajasDirector(){
 
         String nombreDirectorObjetivo;
@@ -423,6 +423,7 @@ public void altaPelicula(){
     }//Fin Metodo Bajas Peliculas
 
     //------------------------------------------------------
+
     //------------------------------------------------------
     public  void modDirector(){
         String nombreDirectorObejetivo;
@@ -436,6 +437,103 @@ public void altaPelicula(){
     //------------------------------------------------------
 
 
+    //---------------------------------------------------------------------------------
+    //-------------------   Consultas Directores ----------------------------------
+//---------------------------------------------------------------------------------
+
+    public void altaActor(){
+
+        Scanner sc = new Scanner(System.in);
+        Actor actorIntroducida = new Actor();
+        String tempArrayList;
+
+        ArrayList<String> obras = new ArrayList();
+        tempArrayList = readString("Introduzca el/los nombres de las obras separadas por < , >\n");
+        String[] tempObras = tempArrayList.split(",");
+        for(String t : tempObras){
+            actorIntroducida.addFeatured(t);
+        }//Conjunto de obras
+
+
+
+        String nombre = "-";
+        nombre = readString("Introduzca el nombre del director.\n");
+        actorIntroducida.setNombre(nombre);
+
+        String fecha_nac = "-";
+        fecha_nac = readString("Introduzca la fecha de nacimiento\n");
+        actorIntroducida.setFecha_nac(fecha_nac);
+
+
+        String nacionalidad = "-";
+        nacionalidad = readString("Introduzca la nacionalidad\n");
+        actorIntroducida.setNacionalidad(nacionalidad);
+
+        String fechaDebut = "-";
+        fechaDebut = readString("Introduzca la ocupación\n");
+        actorIntroducida.setFecha_debut(fechaDebut);
+
+
+        boolean exixtencia = m.existeActor(actorIntroducida);
+        if (exixtencia == false) {
+            m.addActorToCollection(actorIntroducida);
+        }
+
+
+
+
+
+
+    }//Fin alta Actor
+
+    //--------------------------------------------------------
+
+
+    public  void  bajasActor(){
+
+        String nombreActorObjetivo;
+        nombreActorObjetivo = readString("Introduzca el nombre del actor que desea borrar\n");
+        Actor actorBuscar = new Actor();
+
+        actorBuscar.setNombre(nombreActorObjetivo);
+
+        if (m.existeActor(actorBuscar) == false){
+            out.printf("El actor %s introducido no se encuentra en la bases de datos.\n", nombreActorObjetivo);
+
+        }else{
+            m.borrarActor(nombreActorObjetivo);
+
+        }
+
+
+
+    }//Fin Metodo Bajas Actor
+
+    //------------------------------------------------------
+
+
+    //------------------------------------------------------
+    public  void modActor(){
+        String nombreActorObejetivo;
+        nombreActorObejetivo = readString("Introduzca el nombre del actor que desea modificar\n");
+
+        m.modActor(nombreActorObejetivo);
+
+
+    }//Fin Metodo modDirectores
+
+    //------------------------------------------------------
+
+    //------------------------------------------------------
+    public  void mostrarActor(){
+
+        String nombreActorObejetivo;
+        nombreActorObejetivo = readString("Introduzca el nombre del actor que desea mostrar\n");
+        m.mostrarActor(nombreActorObejetivo);
+
+    }
+
+//---------------------------------------------------------------------------------
 
 
 
@@ -444,4 +542,4 @@ public void altaPelicula(){
 
 
 
-    }//Fin Controller
+}//Fin Controller

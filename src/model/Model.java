@@ -440,7 +440,7 @@ public class Model {
         //borramos director si no tiene relaciones
         if(borrable) {
             f.borrarDirectorGremio(indexDirector);
-            out.printf("El director y sus relaciones han sido borrados\n");
+            out.printf("El director ha sido borrado\n");
         }else{
             out.printf("El director no se pudo borrar debido a sus relaciones");
         }
@@ -481,15 +481,15 @@ public class Model {
                     switch (selecPeliculas) {
                         case 1:
                             mod = readString("Introduzca la nueva fecha de nacimiento:   ");
-                            pl.setNombre(mod);
-                            break;
-                        case 2:
-                            mod = readString("Introduzca la nueva ocupación:   ");
                             pl.setFecha_nac(mod);
                             break;
-                        case 3:
-                            mod = readString("Introduzca la nueva duración:   ");
+                        case 2:
+                            mod = readString("Introduzca la nueva nacionalidad:   ");
                             pl.setNacionalidad(mod);
+                            break;
+                        case 3:
+                            mod = readString("Introduzca la ocupacion:   ");
+                            pl.setOcupacion(mod);
                             break;
 
 
@@ -543,6 +543,147 @@ public class Model {
             throw new RuntimeException(e);
         }
     }//Fin Metodo import_Acttxt
+
+    //------------------------------------------------------------------------------------
+    public void borrarActor(String actorObjetivo) {
+
+        boolean borrable = true;
+        int indexActor = buscarActor(actorObjetivo);
+        //Buscamos Peliculas
+        for (String ta : f.gremio_actor.get(indexActor).feature) {
+            int x = 0;
+            for ( Pelicula ac : f.estanteria){
+                if(ta.equals(ac.getTitulo())){
+
+                    borrable = false;
+                }
+                x++;
+            }
+        }
+
+
+        //borramos director si no tiene relaciones
+        if(borrable) {
+            f.borrarActorGremio(indexActor);
+            out.printf("El actor ha sido borrado\n");
+        }else{
+            out.printf("El actor no se pudo borrar debido a sus relaciones");
+        }
+
+
+    }
+    //------------------------------------------------------------------------------------
+
+    //------------------------------------------------------------------------------------
+    public void  modActor(String nombreActor){
+        Scanner sc = new Scanner(System.in);
+        String[] opMod = new String[]{"1", "2", "3"};
+        String tempOpciones = null;
+        String menuMod = ("1) Fecha Nacimiento\n 2) Nacionalidad\n 3) Fecha Debut\n");
+        int selecPeliculas = 0;
+        int salidaPeliculas;
+        String mod =null;
+
+        for (Actor pl : f.getGremio_actor()) {
+            if (nombreActor.equals(pl.getNombre())) {
+
+
+                do {
+                    salidaPeliculas = 0;
+                    System.out.printf("\n-------------------------------------------\nSeleccione la opcion de modificación deseada: \n");
+                    System.out.printf("%s\n>", menuMod);
+                    tempOpciones = sc.nextLine();
+
+                    try {
+                        selecPeliculas = Integer.parseInt(tempOpciones);
+
+                    } catch (Exception e) {
+                        System.out.printf("SE PRODUJO UN ERROR EN LA INTRODUCCION DE LOS DATOS\n saliendo.... \n");
+                        System.exit(-1);
+                    }
+
+                    switch (selecPeliculas) {
+                        case 1:
+                            mod = readString("Introduzca la nueva fecha de nacimiento:   ");
+                            pl.setFecha_nac(mod);
+                            break;
+                        case 2:
+                            mod = readString("Introduzca la nueva nacionalidad:   ");
+                            pl.setNacionalidad(mod);
+                            break;
+                        case 3:
+                            mod = readString("Introduzca la nueva fecha de debut:   ");
+                            pl.setFecha_debut(mod);
+                            break;
+
+
+                        default:
+                            System.out.printf("No se encontró la opcion solicitada\n Reintentando...\n \n");
+                            salidaPeliculas = 0;
+
+
+                    }
+                } while (salidaPeliculas == 0);
+            }
+        }
+
+
+    }//Fin modificacion Actor
+    //------------------------------------------------------------------------------------
+
+    //------------------------------------------------------------------------------------
+
+    public  void  mostrarActor(String actorObjetivo){
+
+        String arrayString = null;
+        String tableString = null;
+        StringBuilder arrayStringBuilder = new StringBuilder();
+        StringBuilder tableBuilder = new StringBuilder();
+
+        tableBuilder.append(
+                "    Titulo" +
+                        "    Año" +
+                        "    Duración" +
+                        "    País" +
+                        "    Direción" +
+                        "    Guión" +
+                        "    Música" +
+                        "    Fotografía" +
+                        "    Reparto" +
+                        "    Productora" +
+                        "    Genero" +
+                        "    Simnosis\n"); //Linea de Campos.
+        tableString = tableBuilder.toString();
+        out.printf("|%s|", tableString);
+
+        for (Pelicula peliTemp : f.estanteria) {
+            for(String act : peliTemp.reparto) {
+                if (actorObjetivo.equals(act)) {
+
+                    arrayStringBuilder.append(String.format(
+                            "%30s\n"
+                                    + "%30s\n"
+                                    + "%20.1f min\n"
+                                    + "%30s\n"
+                                    + "%30s\n"
+                                    + "%30s\n"
+                                    + "%30s\n"//7
+                                    + "%30s\n"
+                                    + "%30s\n"
+                                    + "%30s\n"
+                                    + "%30s\n"
+                                    + "%30s\n", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getDireccion(),
+                            peliTemp.getGuion(), peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getReparto(), peliTemp.getProductora(), peliTemp.getGenero(), peliTemp.getSimnosis()));
+                }
+                arrayString = arrayStringBuilder.toString();
+
+            }
+        }
+        out.printf("|%s|", arrayString);
+    }//Fin Metodo mostrarPelicula
+
+
+    //------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------
     public void  addActorToCollection(Actor nuevoActor){
