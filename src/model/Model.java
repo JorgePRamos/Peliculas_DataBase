@@ -14,7 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static com.coti.tools.Esdia.readFloat;
 import static com.coti.tools.Esdia.readString;
-
+import java.util.Collections;
+import java.util.Comparator;
 import static java.lang.System.*;
 
 
@@ -199,45 +200,23 @@ public class Model {
         StringBuilder arrayStringBuilder = new StringBuilder();
         StringBuilder tableBuilder = new StringBuilder();
 
-        tableBuilder.append(
-                "    Titulo" +
-                "    Año" +
-                "    Duración" +
-                "    País" +
-                "    Direción" +
-                "    Guión" +
-                "    Música" +
-                "    Fotografía" +
-                "    Reparto" +
-                "    Productora" +
-                "    Genero" +
-                "    Simnosis\n"); //Linea de Campos.
+        tableBuilder.append(String.format(
+                "|  %-55s  |  %-30s  |  %-30s  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n","Titulo", "Año", "Duración", "Pais", "Dirección", "Guión", "Música", "Fotografía", "Reparto", "Productora", "Genero", "Simnosis")); //Linea de Campos.
         tableString = tableBuilder.toString();
-        out.printf("|%s|", tableString);
+        out.printf("%s", tableString);
 
         for (Pelicula peliTemp : f.estanteria) {
             if (peliObjetivo.equals(peliTemp.getTitulo())) {
 
                     arrayStringBuilder.append(String.format(
-                            "%30s\n"
-                                    + "%30s\n"
-                                    + "%20.1f min\n"
-                                    + "%30s\n"
-                                    + "%30s\n"
-                                    + "%30s\n"
-                                    + "%30s\n"//7
-                                    + "%30s\n"
-                                    + "%30s\n"
-                                    + "%30s\n"
-                                    + "%30s\n"
-                                    + "%30s\n", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getDireccion(),
+                            "|  %-55s  |  %-30s  |  %-30.2f  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getDireccion(),
                             peliTemp.getGuion(), peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getReparto(), peliTemp.getProductora(), peliTemp.getGenero(), peliTemp.getSimnosis()));
                 }
                 arrayString = arrayStringBuilder.toString();
 
 
         }
-        out.printf("|%s|", arrayString);
+        out.printf("%s", arrayString);
     }//Fin Metodo mostrarPelicula
 
 
@@ -639,47 +618,36 @@ public class Model {
         String tableString = null;
         StringBuilder arrayStringBuilder = new StringBuilder();
         StringBuilder tableBuilder = new StringBuilder();
-
-        tableBuilder.append(
-                "    Titulo" +
-                        "    Año" +
-                        "    Duración" +
-                        "    País" +
-                        "    Direción" +
-                        "    Guión" +
-                        "    Música" +
-                        "    Fotografía" +
-                        "    Reparto" +
-                        "    Productora" +
-                        "    Genero" +
-                        "    Simnosis\n"); //Linea de Campos.
+        ArrayList<Pelicula> obrasOrdenadas = new ArrayList();
+        tableBuilder.append(String.format(
+                "|  %-55s  |  %-30s  |  %-30s  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n","Titulo", "Año", "Duración", "Pais", "Dirección", "Guión", "Música", "Fotografía", "Reparto", "Productora", "Genero", "Simnosis")); //Linea de Campos.
         tableString = tableBuilder.toString();
-        out.printf("|%s|", tableString);
+        out.printf("%s", tableString);
 
         for (Pelicula peliTemp : f.estanteria) {
             for(String act : peliTemp.reparto) {
                 if (actorObjetivo.equals(act)) {
+                    obrasOrdenadas.add(peliTemp);
 
-                    arrayStringBuilder.append(String.format(
-                            "%30s\n"
-                                    + "%30s\n"
-                                    + "%20.1f min\n"
-                                    + "%30s\n"
-                                    + "%30s\n"
-                                    + "%30s\n"
-                                    + "%30s\n"//7
-                                    + "%30s\n"
-                                    + "%30s\n"
-                                    + "%30s\n"
-                                    + "%30s\n"
-                                    + "%30s\n", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getDireccion(),
-                            peliTemp.getGuion(), peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getReparto(), peliTemp.getProductora(), peliTemp.getGenero(), peliTemp.getSimnosis()));
                 }
-                arrayString = arrayStringBuilder.toString();
-
             }
         }
-        out.printf("|%s|", arrayString);
+
+        Collections.sort(obrasOrdenadas, new Comparator<Pelicula>(){
+
+            @Override
+            public int compare(Pelicula o1, Pelicula o2) {
+                return o1.getAno().compareTo(o2.getAno());
+            }
+
+        });
+            for(Pelicula p : obrasOrdenadas) {
+                arrayStringBuilder.append(String.format(
+                        "|  %-55s  |  %-30s  |  %-30.2f  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n", p.getTitulo(), p.getAno(), p.getDuracion(), p.getPais(), p.getDireccion(),
+                        p.getGuion(), p.getMusica(), p.getFotografia(), p.getReparto(), p.getProductora(), p.getGenero(), p.getSimnosis()));
+            }
+        arrayString = arrayStringBuilder.toString();
+        out.printf("%s", arrayString);
     }//Fin Metodo mostrarPelicula
 
 
