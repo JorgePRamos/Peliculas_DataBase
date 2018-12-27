@@ -971,4 +971,158 @@ public class Model {
     }
     // ------------------------------------------------------------------------------------
 
+    public void listaPeliculas(){
+
+        String arrayString = null;
+        String tableString = null;
+        StringBuilder arrayStringBuilder = new StringBuilder();
+        StringBuilder tableBuilder = new StringBuilder();
+        ArrayList<Pelicula> obrasOrdenadas = new ArrayList();
+
+
+        tableBuilder.append(String.format(
+                "|  %-55s  |  %-30s  |  %-30s  |  %-40s  |  %-40s  |\n","Titulo", "Año", "Duración", "Pais", "Genero")); //Linea de Campos.
+        tableString = tableBuilder.toString();
+        out.printf("%s", tableString);
+
+
+
+        for (Pelicula peliTemp : f.estanteria) {
+
+                    obrasOrdenadas.add(peliTemp);
+
+
+
+        }
+
+        Collections.sort(obrasOrdenadas, new Comparator<Pelicula>(){
+
+            @Override
+            public int compare(Pelicula o1, Pelicula o2) {
+                return o1.getTitulo().compareTo(o2.getTitulo());
+            }
+
+        });
+        for(Pelicula p : obrasOrdenadas) {
+            arrayStringBuilder.append(String.format(
+                    "|  %-55s  |  %-30s  |  %-30.2f  |  %-40s  |  %-40s  |\n", p.getTitulo(), p.getAno(), p.getDuracion(), p.getPais(), p.getDireccion(),
+                    p.getGuion(), p.getMusica(), p.getFotografia(), p.getReparto(), p.getProductora(), p.getGenero(), p.getSimnosis()));
+        }
+        arrayString = arrayStringBuilder.toString();
+        out.printf("%s", arrayString);
+
+    }
+
+    // ------------------------------------------------------------------------------------
+
+    public void listaDirectores(){
+
+        String arrayString = null;
+        String tableString = null;
+        StringBuilder arrayStringBuilder = new StringBuilder();
+        StringBuilder tableBuilder = new StringBuilder();
+        ArrayList<Director> directoresOrdenadas = new ArrayList();
+
+
+
+        tableBuilder.append(String.format(
+                "|  %-55s  |  %-50s  |  %-50s  |  %-50s  |\n","Nombre", "Fecha de nacimiento", "Nacionalidad", "Ocupación")); //Linea de Campos.
+
+        tableString = tableBuilder.toString();
+        out.printf("%s", tableString);
+
+
+
+        for (Director directorTemp : f.gremio_dir) {
+
+            directoresOrdenadas.add(directorTemp);
+
+
+
+        }
+
+        Collections.sort(directoresOrdenadas, new Comparator<Director>(){
+
+            @Override
+            public int compare(Director o1, Director o2) {
+                return o1.getNacionalidad().compareTo(o2.getNacionalidad());
+            }
+                   });
+        Collections.sort(directoresOrdenadas, new Comparator<Director>(){
+
+            @Override
+            public int compare(Director o1, Director o2) {
+                return o1.getFecha_nac().compareTo(o2.getFecha_nac());
+            }
+        });
+
+
+
+        for(Director p : directoresOrdenadas) {
+            arrayStringBuilder.append(String.format(
+                    "|  %-55s  |  %-50s  |  %-50s  |  %-50s  |\n",p.getNombre(), p.getFecha_nac(), p.getNacionalidad(), p.getOcupacion()));
+        }
+        arrayString = arrayStringBuilder.toString();
+        out.printf("%s", arrayString);
+
+    }
+
+    // ------------------------------------------------------------------------------------
+
+    public void listaActores(){
+
+        String arrayString = null;
+        String tableString = null;
+        StringBuilder arrayStringBuilder = new StringBuilder();
+        StringBuilder tableBuilder = new StringBuilder();
+        ArrayList<Actor> actoresOrdenadas = new ArrayList();
+
+
+        tableBuilder.append(String.format(
+                "|  %-55s  |  %-50s  |  %-50s  |  %-50s  |\n","Nombre", "Fecha de nacimiento", "Nacionalidad", "Año Debut")); //Linea de Campos.
+
+        tableString = tableBuilder.toString();
+        out.printf("%s", tableString);
+
+
+
+        for (Actor actTemp : f.gremio_actor) {
+
+            actoresOrdenadas.add(actTemp);
+
+
+
+        }
+
+
+        Collections.sort(actoresOrdenadas, new Comparator<Actor>(){
+
+            @Override
+            public int compare(Actor o1, Actor o2) {
+                return o1.getFecha_debut().compareTo(o2.getFecha_debut());
+            }
+
+        });
+        Collections.sort(actoresOrdenadas, new Comparator<Actor>(){
+
+            @Override
+            public int compare(Actor o1, Actor o2) {
+                return o1.getNombre().compareTo(o2.getNombre());
+            }
+
+        });
+
+
+        for(Actor p : actoresOrdenadas) {
+            arrayStringBuilder.append(String.format(
+                    "|  %-55s  |  %-50s  |  %-50s  |  %-50s  |\n",p.getNombre(), p.getFecha_nac(), p.getNacionalidad(), p.getFecha_debut()));
+        }
+        arrayString = arrayStringBuilder.toString();
+        out.printf("%s", arrayString);
+
+    }
+
+
+
+
 }//Fin Model

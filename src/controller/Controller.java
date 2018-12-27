@@ -535,7 +535,28 @@ public void altaPelicula(){
 
 //---------------------------------------------------------------------------------
 
+    public  void  listarPeliculas(){
 
+        m.listaPeliculas();
+
+    }
+
+
+    //---------------------------------------------------------------------------------
+
+    public  void  listarDirectores(){
+
+        m.listaDirectores();
+
+    }
+
+    //---------------------------------------------------------------------------------
+
+    public  void  listarActores(){
+
+        m.listaActores();
+
+    }
 
 
 

@@ -194,7 +194,49 @@ public class View {
 
                 break;
                 case 7:
-                 //   cn.listados();
+                    String[] opciones = new String[]{"1", "2", "3"};
+                    String tempOpciones = null;
+                    String menuOpciones = (" 1) Peiculas\n 2) Directores\n 3) Actores\n 4) Atras\n");
+                    int selectOpciones = 0;
+                    int salidaOpciones;
+
+
+                    do {
+                        salidaOpciones = 0;
+                        System.out.printf("\n-------------------------------------------\nSeleccione la opcion deseada: \n");
+                        System.out.printf("%s\n>", menuOpciones);
+                        tempOpciones = sc.nextLine();
+
+                        try {
+                            selectOpciones = Integer.parseInt(tempOpciones);
+
+                        } catch (Exception e) {
+                            System.out.printf("SE PRODUJO UN ERROR EN LA INTRODUCCION DE LOS DATOS\n saliendo.... \n");
+                            System.exit(-1);
+                        }
+
+                        switch (selectOpciones){
+                            case 1:
+                                cn.listarPeliculas();
+                                break;
+                            case 2:
+                                cn.listarDirectores();
+                                break;
+                            case 3:
+                                cn.listarActores();
+                                break;
+                            case 4:
+                                salidaOpciones = 1;
+                                break;
+
+                            default:
+                                System.out.printf("No se encontró la opcion solicitada\n Reintentando...\n \n");
+                                salidaOpciones= 0;
+
+
+                        }
+                    }while(salidaOpciones == 0);
+
                     break;
 
 
