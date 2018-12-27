@@ -750,6 +750,24 @@ public class Model {
 }//addHtmlRow
 
     //------------------------------------------------------------------------------------
+
+    public  String addColRow(){
+        String arrayCol;
+        StringBuilder arrayColgBuilder = new StringBuilder();
+
+        for(Director dir : f.gremio_dir){
+
+            arrayColgBuilder.append(String.format("%-65s%-65s%-65s%-80s",dir.getNombre(),dir.getFecha_nac(),dir.getNacionalidad(),dir.getOcupacion())); //Linea de Campos.));
+            for(String s : dir.obras){
+                arrayColgBuilder.append(String.format("%-50s",s));
+            }
+            arrayColgBuilder.append("\n");
+        }
+        arrayCol = arrayColgBuilder.toString();
+        return arrayCol;
+    }//addHtmlRow
+
+    //------------------------------------------------------------------------------------
     public void saveFilmsBin(String direccion ) {
 
         out.printf("Estoy en SaveFilsmBin\n");

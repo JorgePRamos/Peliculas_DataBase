@@ -2,11 +2,14 @@ package controller;
 
 import java.io.BufferedWriter;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.io.FileInputStream;
 import static com.coti.tools.Esdia.readFloat;
 import static com.coti.tools.Esdia.readString;
 
@@ -112,7 +115,7 @@ public class Controller {
             out.printf("No existe directores.bin\n");
             out.printf("Importando directores desde directores.txt.\nEspere....\n");
 
-           String txtDirecPath = ruta +"peliculas.txt" ;
+           String txtDirecPath = ruta +"directores.txt" ;
             m.import_Directxt(txtDirecPath);//importar fichero .txt
 
         }
@@ -124,7 +127,11 @@ public class Controller {
 
     //---------------------------------------------------------------------------------------------
 public void archivo(){
+        archivoHtml();
+        archivoCol();
+}
 
+public void archivoHtml() {
 
         //--------  HTML    -------
 
@@ -134,7 +141,7 @@ public void archivo(){
     }*/
         out.printf("Exportando Peliculas en formato Html a ---> peliculas.html\n");
         StringBuilder htmlFileSBuilder = new StringBuilder();
-        htmlFileSBuilder.append("<!DOCTYPE html>\n" + "<html>\n"+"<head>\n" +
+        htmlFileSBuilder.append("<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" +
                 "<style>\n" +
                 "table, th, td {\n" +
                 "  border: 1px solid black;\n" +
@@ -149,41 +156,56 @@ public void archivo(){
                 "</style>\n" +
                 "</head>\n");//Head
         htmlFileSBuilder.append("<body>\n" + "<h2>Tabla Peliculas Filmoteca</h2>\n" +
-                                    "<table style=\"width:100%\">");//Body
+                "<table style=\"width:100%\">");//Body
         htmlFileSBuilder.append("<tr>\n" +
-            "    <th>Titulo</th>\n" +
-            "    <th>Año</th> \n" +
-            "    <th>Duración</th>\n" +
-            "\t<th>País</th>\n" +
-            "    <th>Direción</th> \n" +
-            "    <th>Guión</th>\n" +
-            "\t<th>Música</th>\n" +
-            "    <th>Fotografía</th> \n" +
-            "    <th>Reparto</th>\n" +
-            "\t<th>Productora</th>\n" +
-            "    <th>Genero</th> \n" +
+                "    <th>Titulo</th>\n" +
+                "    <th>Año</th> \n" +
+                "    <th>Duración</th>\n" +
+                "\t<th>País</th>\n" +
+                "    <th>Direción</th> \n" +
+                "    <th>Guión</th>\n" +
+                "\t<th>Música</th>\n" +
+                "    <th>Fotografía</th> \n" +
+                "    <th>Reparto</th>\n" +
+                "\t<th>Productora</th>\n" +
+                "    <th>Genero</th> \n" +
                 "    <th>Simnosis</th> \n" +
-            "  </tr>"); //Linea de Campos.
+                "  </tr>"); //Linea de Campos.
 
-    //--------  HTML_Filas   -------
+        //--------  HTML_Filas   -------
 
-    int n =    f.getNpeliculas();
-    //for(int x=0;x<n;x++){
-    htmlFileSBuilder.append(m.addHtmlRow());
+        int n = f.getNpeliculas();
+        //for(int x=0;x<n;x++){
+        htmlFileSBuilder.append(m.addHtmlRow());
 //   }
-    //--------  HTML_Cierre   -------
+        //--------  HTML_Cierre   -------
 
-      htmlFileSBuilder.append("</table>\n" +
-            "\n" +
-            "</body>\n" +
-            "</html>");
-
-
+        htmlFileSBuilder.append("</table>\n" +
+                "\n" +
+                "</body>\n" +
+                "</html>");
 
 
+        escribirFichero(htmlFileSBuilder.toString(), "peliculas.html");
 
 
-escribirFichero(htmlFileSBuilder.toString(), "peliculas.html");
+    }
+
+
+public void archivoCol() {
+        //--------  Ficheros_COL    -------
+        out.printf("Exportando Directores  a ---> directores.col\n");
+        String tableString = null;
+        StringBuilder tableBuilder = new StringBuilder();
+        tableBuilder.append(String.format("%-65s%-65s%-65s%-80s%-50s\n", "Nombre", "Fecha de nacimiento", "Nacionalidad", "Ocupación", "Obras")); //Linea de Campos.)); //Linea de Campos.
+
+        tableBuilder.append(m.addColRow());
+
+
+        escribirFicheroCol(tableBuilder.toString(), "directores.col");
+
+
+    }
 
 
 
@@ -192,11 +214,12 @@ escribirFichero(htmlFileSBuilder.toString(), "peliculas.html");
 
 
 
-    //--------  Ficheros_COL    -------
-    out.printf("Exportando Directores  a ---> directores.col\n");
 
 
-}//Fin Metodo Archivo.
+
+
+//Fin Metodo Archivo.
+
 
 
 
@@ -220,11 +243,21 @@ try {
     writer.close();
 }catch (Exception e){
 
-    out.printf("Error al escribir:  peliculas.html\n");
+    out.printf("Error al escribir:  directores.col\n");
     System.out.println(e.toString());
 }
     }
 
+
+    public void escribirFicheroCol(String cont,  String nombreFichero) {
+        Path path = Paths.get(ruta + nombreFichero);
+        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+            writer.write(cont, 0, cont.length());
+        } catch (IOException x) {
+            System.err.format("IOException: %s%n", x);
+        }
+
+    }
 
 //---------------------------------------------------------------------------------
     //-------------------   Consultas Peliculas ----------------------------------
