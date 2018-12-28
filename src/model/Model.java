@@ -413,7 +413,7 @@ public class Model {
             if (nombre.getNombre().equals(dr.getNombre())) {
 
                 out.printf("Director encontrado\n");
-                exitencia = 0;
+                exitencia = 1;
             }
 
         }
@@ -724,7 +724,7 @@ public class Model {
         for (Actor ac : f.gremio_actor) {
             if (nombreObjetivo.equals(ac.getNombre())) {
 
-                out.printf("Actpr encontrado, index %d\n", index);
+                out.printf("Actor encontrado, index %d\n", index);
                 break;
 
             }
@@ -1131,11 +1131,12 @@ public class Model {
         }
 
 
+
         Collections.sort(actoresOrdenadas, new Comparator<Actor>() {
 
             @Override
             public int compare(Actor o1, Actor o2) {
-                return o1.getFecha_debut().compareTo(o2.getFecha_debut());
+                return o1.getNombre().compareTo(o2.getNombre());
             }
 
         });
@@ -1143,7 +1144,7 @@ public class Model {
 
             @Override
             public int compare(Actor o1, Actor o2) {
-                return o1.getNombre().compareTo(o2.getNombre());
+                return o1.getFecha_debut().compareTo(o2.getFecha_debut());
             }
 
         });
