@@ -22,23 +22,8 @@ public class Controller {
     Filmoteca f = new Filmoteca();
     String ruta = System.getProperty("user.home") +
                                     "/Desktop/Filmot18/";//Raiz carpeta Film18
-    //Path rutaCarpeta = Paths.get(ruta);
     public void salidaProg(){
 
-        /*
-        ArrayList<Pelicula> pil = new ArrayList();
-                pil = m.dameFilmoteca();
-        out.printf("Estoy en salida prog\n");
-        for (Pelicula i : pil) {
-            out.printf("////////    %s\n",i.getTitulo());
-
-
-
-        }*/
-
-
-
-      // m.saveBin( fimoteca, rutaCarpeta);//crear filmoteca constructor ect
         m.saveFilmsBin( ruta+"peliculas.bin");
         m.saveActorBin(ruta+"actores.bin");
         m.saveDirectorBin(ruta +"directores.bin");
@@ -52,8 +37,6 @@ public class Controller {
 
     public void arranque(){
         boolean exist;
-        /*String ruta = System.getProperty("user.home") +
-                                     "Desktop/Filmot18/";//Raiz carpeta Film18*///remove if not used lately
 
 
 
@@ -70,12 +53,12 @@ public class Controller {
                m.addFilmToCollection(o);
 
            }
+            out.printf("Importando peliculas desde películas.bin.\nEspere....\n\n");
 
         }else{//No exixte binario pelicuas.
-            out.printf("No existe pelicuas.bin\n");
-            out.printf("Importando peliculas desde pelicuals.txt.\nEspere....\n");
+            out.printf("No existe películas.bin\n");
+            out.printf("Importando peliculas desde películas.txt.\nEspere....\n\n");
 
-          //  Path txtPeliPath = Paths.get("peliculas.txt" );
             String txtPeliPath = ruta + "peliculas.txt";
 
             m.import_Pelitxt(txtPeliPath);
@@ -93,10 +76,11 @@ public class Controller {
                 m.addActorToCollection(o);
 
             }
+            out.printf("Importando actores desde actores.bin.\nEspere....\n\n");
 
         }else{//No exixte binario actores.
             out.printf("No existe actores.bin\n");
-            out.printf("Importando actores desde actores.txt.\nEspere....\n");
+            out.printf("Importando actores desde actores.txt.\nEspere....\n\n");
 
             String txtActPath = ruta +"actores.txt";
             m.import_Acttxt(txtActPath);//importar fichero .txt
@@ -111,15 +95,16 @@ public class Controller {
                 m.addDirectorToCollection(o);
 
             }
+            out.printf("Importando directores desde directores.bin.\nEspere....\n\n");
+
         }else{//No exixte binario directores.
             out.printf("No existe directores.bin\n");
-            out.printf("Importando directores desde directores.txt.\nEspere....\n");
+            out.printf("Importando directores desde directores.txt.\nEspere....\n\n");
 
            String txtDirecPath = ruta +"directores.txt" ;
             m.import_Directxt(txtDirecPath);//importar fichero .txt
 
         }
-        //----------------------------------------------------------------------------------------------
 
 
     }//Fin Metodo Arranque
@@ -136,10 +121,8 @@ public void archivoHtml() {
         //--------  HTML    -------
 
         //--------  HTML_FORMATO    -------
-        /*for(Pelicula model : f.estanteria) {
-        System.out.println(model.getTitulo());
-    }*/
-        out.printf("Exportando Peliculas en formato Html a ---> peliculas.html\n");
+
+        out.printf("Exportado Peliculas en formato Html ---> peliculas.html\n");
         StringBuilder htmlFileSBuilder = new StringBuilder();
         htmlFileSBuilder.append("<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" +
                 "<style>\n" +
@@ -194,7 +177,7 @@ public void archivoHtml() {
 
 public void archivoCol() {
         //--------  Ficheros_COL    -------
-        out.printf("Exportando Directores  a ---> directores.col\n");
+        out.printf("Exportado Directores ---> directores.col\n");
         String tableString = null;
         StringBuilder tableBuilder = new StringBuilder();
         tableBuilder.append(String.format("%-65s%-65s%-65s%-80s%-50s\n", "Nombre", "Fecha de nacimiento", "Nacionalidad", "Ocupación", "Obras")); //Linea de Campos.)); //Linea de Campos.
@@ -324,8 +307,8 @@ public void altaPelicula(){
         peliculaIntroducida.setGenero(genero);
 
 
-    boolean exixtencia = m.existePelicula(peliculaIntroducida);
-    if (exixtencia == false) {
+    int exixtencia = m.existePelicula(peliculaIntroducida);
+    if (exixtencia == 0) {
         m.addFilmToCollection(peliculaIntroducida);
     }
 
@@ -348,7 +331,7 @@ public void altaPelicula(){
 
         peliabuscar.setTitulo(nombrePeliculaObejetivo);
 
-        if (m.existePelicula(peliabuscar) == false){
+        if (m.existePelicula(peliabuscar) == 0){
             out.printf("La pelicula %s introducida no se encuentra en la bases de datos.\n", nombrePeliculaObejetivo);
 
         }else{
@@ -418,8 +401,8 @@ public void altaPelicula(){
         directorIntroducida.setOcupacion(ocupacion);
 
 
-        boolean exixtencia = m.existeDirector(directorIntroducida);
-        if (exixtencia == false) {
+        int exixtencia = m.existeDirector(directorIntroducida);
+        if (exixtencia == 0) {
             m.addDirectorToCollection(directorIntroducida);
         }
 
@@ -443,7 +426,7 @@ public void altaPelicula(){
 
         directorBuscar.setNombre(nombreDirectorObjetivo);
 
-        if (m.existeDirector(directorBuscar) == false){
+        if (m.existeDirector(directorBuscar) == 0){
             out.printf("El director %s introducido no se encuentra en la bases de datos.\n", nombreDirectorObjetivo);
 
         }else{
@@ -507,8 +490,8 @@ public void altaPelicula(){
         actorIntroducida.setFecha_debut(fechaDebut);
 
 
-        boolean exixtencia = m.existeActor(actorIntroducida);
-        if (exixtencia == false) {
+        int exixtencia = m.existeActor(actorIntroducida);
+        if (exixtencia == 0) {
             m.addActorToCollection(actorIntroducida);
         }
 
@@ -530,7 +513,7 @@ public void altaPelicula(){
 
         actorBuscar.setNombre(nombreActorObjetivo);
 
-        if (m.existeActor(actorBuscar) == false){
+        if (m.existeActor(actorBuscar) == 0){
             out.printf("El actor %s introducido no se encuentra en la bases de datos.\n", nombreActorObjetivo);
 
         }else{

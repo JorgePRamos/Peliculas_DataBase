@@ -1,5 +1,7 @@
 package model;
+
 import model.Filmoteca;
+
 import java.io.FileInputStream;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -12,10 +14,13 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import static com.coti.tools.Esdia.readFloat;
 import static com.coti.tools.Esdia.readString;
+
 import java.util.Collections;
 import java.util.Comparator;
+
 import static java.lang.System.*;
 
 
@@ -25,23 +30,22 @@ public class Model {
     String delimiter = "#";
 
 
-
     //------------------------------------------------------------------------------------
     // -------------    Funciones Peliculas    -------------------------------------------
 
-    public void import_Pelitxt(String path){
+    public void import_Pelitxt(String path) {
         String[] lines = new String[100];
         Scanner scanner;
 
-        try{
-            scanner  = new Scanner(new File(path));
+        try {
+            scanner = new Scanner(new File(path));
             String line = null;
             int x = 0;
 
             while (scanner.hasNextLine()) {
                 Pelicula peli = new Pelicula();//Def Constructor
                 line = scanner.nextLine();
-                String [] tempString = line.split(delimiter);
+                String[] tempString = line.split(delimiter);
 
                 peli.setTitulo(tempString[0]);
                 peli.setAno(tempString[1]);
@@ -55,18 +59,18 @@ public class Model {
                 peli.setSimnosis(tempString[11]);
 
                 String[] actoresArray = tempString[8].split("\t");
-                for(String t : actoresArray){
+                for (String t : actoresArray) {
                     peli.addActor(t);
                 }//Conjunto de actores
 
                 String[] directoresArray = tempString[4].split("\t");
-                for(String t : directoresArray){
+                for (String t : directoresArray) {
                     peli.addDirector(t);
                 }//Conjunto de directores.
 
                 f.addPeliculaFilmoteca(peli);
             }
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.err.println("Caught FileNotFoundException: " + e.getMessage());
             throw new RuntimeException(e);
         }
@@ -89,18 +93,19 @@ public class Model {
     }//Fin Metodo importPeli
 
     //------------------------------------------------------------------------------------
-    public void  addFilmToCollection(Pelicula nuevaPeli){
+    public void addFilmToCollection(Pelicula nuevaPeli) {
         f.addPeliculaFilmoteca(nuevaPeli);
     }
+
     //------------------------------------------------------------------------------------
-    public void  modPelicula(String nombrePelicula){
+    public void modPelicula(String nombrePelicula) {
         Scanner sc = new Scanner(System.in);
-        String[] opMod = new String[]{"1", "2", "3","4","5","6","7","8","9","10","11","12"};
+        String[] opMod = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"};
         String tempOpciones = null;
-        String menuMod = (" 1) Titulo\n 2) Año\n 3) Duración\n 4) País\n 5) Dirección\n 6) Guion\n 7) Música\n 8) Fotogrfía\n 9) Reparto\n 10) Productora\n 11) Género\n 12) Simnosis\n");
+        String menuMod = (" 1) Titulo\n 2) Año\n 3) Duración\n 4) País\n 5) Dirección\n 6) Guion\n 7) Música\n 8) Fotogrfía\n 9) Reparto\n 10) Productora\n 11) Género\n 12) Simnosis\n 13) Salir\n");
         int selecPeliculas = 0;
         int salidaPeliculas;
-        String mod =null;
+        String mod = null;
 
         for (Pelicula pl : f.estanteria) {
             if (nombrePelicula.equals(pl.getTitulo())) {
@@ -142,7 +147,7 @@ public class Model {
                             mod = readString("Introduzca el/los nombres de los directores separados por < , >\n");
                             String[] tempDirectores = mod.split(",");
                             pl.borrarTodaDireccion();
-                            for(String t : tempDirectores){
+                            for (String t : tempDirectores) {
                                 pl.addDirector(t);
                             }//Conjunto de directores
                             break;
@@ -162,7 +167,7 @@ public class Model {
                             mod = readString("Introduzca los nombres de los actores separados por < , >\n");
                             String[] tempActores = mod.split(",");
                             pl.borrarTodaCasting();
-                            for(String t : tempActores){
+                            for (String t : tempActores) {
                                 pl.addActor(t);
                             }//Conjunto de directores
                             break;
@@ -177,6 +182,9 @@ public class Model {
                         case 12:
                             mod = readString("Introduzca la nueva simnosis:   ");
                             pl.setSimnosis(mod);
+                            break;
+                        case 13:
+                            salidaPeliculas = 1;
                             break;
 
                         default:
@@ -193,7 +201,7 @@ public class Model {
     }//Fin modificacion
     //------------------------------------------------------------------------------------
 
-    public  void  mostrarPelicula(String peliObjetivo){
+    public void mostrarPelicula(String peliObjetivo) {
 
         String arrayString = null;
         String tableString = null;
@@ -201,18 +209,18 @@ public class Model {
         StringBuilder tableBuilder = new StringBuilder();
 
         tableBuilder.append(String.format(
-                "|  %-55s  |  %-30s  |  %-30s  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n","Titulo", "Año", "Duración", "Pais", "Dirección", "Guión", "Música", "Fotografía", "Reparto", "Productora", "Genero", "Simnosis")); //Linea de Campos.
+                "|  %-55s  |  %-30s  |  %-30s  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n", "Titulo", "Año", "Duración", "Pais", "Dirección", "Guión", "Música", "Fotografía", "Reparto", "Productora", "Genero", "Simnosis")); //Linea de Campos.
         tableString = tableBuilder.toString();
         out.printf("%s", tableString);
 
         for (Pelicula peliTemp : f.estanteria) {
             if (peliObjetivo.equals(peliTemp.getTitulo())) {
 
-                    arrayStringBuilder.append(String.format(
-                            "|  %-55s  |  %-30s  |  %-30.2f  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getDireccion(),
-                            peliTemp.getGuion(), peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getReparto(), peliTemp.getProductora(), peliTemp.getGenero(), peliTemp.getSimnosis()));
-                }
-                arrayString = arrayStringBuilder.toString();
+                arrayStringBuilder.append(String.format(
+                        "|  %-55s  |  %-30s  |  %-30.2f  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getDireccion(),
+                        peliTemp.getGuion(), peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getReparto(), peliTemp.getProductora(), peliTemp.getGenero(), peliTemp.getSimnosis()));
+            }
+            arrayString = arrayStringBuilder.toString();
 
 
         }
@@ -225,86 +233,102 @@ public class Model {
 
         int indexPelicula = buscarPelicula(peliculaObjetivo);
         //buscamos actores
+
         for (String ta : f.estanteria.get(indexPelicula).reparto) {
-            int x = 0;
-            for ( Actor ac : f.gremio_actor){
-                if(ta.equals(ac.getNombre())){
-                    ac.borrarFeature(x);
+
+            for (Actor ac : f.gremio_actor) {
+                int x = 0;
+                if (ta.equals(ac.getNombre())) {
+                    for(String fea : ac.feature) {
+                        if(peliculaObjetivo.equals(fea)){
+                        ac.borrarFeature(x);
+                        break;
+                        }
+                        x++;
+                    }
 
                 }
-                x++;
+
             }
         }
-
-        //buscamos directores
+        //dir
         for (String da : f.estanteria.get(indexPelicula).direccion) {
-            int y = 0;
-            for ( Director dir : f.gremio_dir){
-                if(da.equals(dir.getNombre())){
-                    dir.borrarObra(y);
+
+            for (Director dir : f.gremio_dir) {
+                int y = 0;
+                if (da.equals(dir.getNombre())) {
+                    for(String ob : dir.obras) {
+                        if(peliculaObjetivo.equals(ob)){
+                            dir.borrarObra(y);
+                            break;
+                        }
+                        y++;
+                    }
 
                 }
-                y++;
+
             }
         }
+
         //borramos Pelicula
         f.borrarPeliculaFilmoteca(indexPelicula);
         out.printf("La pelicula y sus relaciones han sido borradas\n");
 
 
     }
+
     //------------------------------------------------------------------------------------
-    public int buscarPelicula(String peliculaObjetivo){
+    public int buscarPelicula(String peliculaObjetivo) {
         int index = 0;
-        for(Pelicula pl : f.getFilmoteca()){
-            if(peliculaObjetivo.equals(pl.getTitulo())){
+        for (Pelicula pl : f.estanteria) {
+            if (peliculaObjetivo.equals(pl.getTitulo())) {
 
                 out.printf("Pelicula Encontrada, con index %d \n", index);
-
+                break;
 
             }
             index++;
 
         }
 
-        return  index;
+        return index;
     }
 
 
     //------------------------------------------------------------------------------------
-    public boolean existePelicula(Pelicula peliculaObjetivo){
+    public int existePelicula(Pelicula peliculaObjetivo) {
 
-        boolean exitencia = false;
+        int exitencia = 0;
 
-            for(Pelicula pl : f.getFilmoteca()){
-                if(peliculaObjetivo.getTitulo().equals(pl.getTitulo())){
+        for (Pelicula pl : f.estanteria) {
+            if (peliculaObjetivo.getTitulo().equals(pl.getTitulo())) {
 
-                    out.printf("Pelicula Encontrada\n");
-                    exitencia = true;
-                }
-
+                out.printf("Pelicula Encontrada\n");
+                exitencia = 1;
+                break;
             }
 
-            return exitencia;
-    }
+        }
 
+        return exitencia;
+    }
 
 
     //------------------------------------------------------------------------------------
     //-------------     Funciones Directores       ---------------------------------------
-    public void import_Directxt( String path){
+    public void import_Directxt(String path) {
         String[] lines = new String[100];
         Scanner scanner;
-        try{
+        try {
 
-            scanner  = new Scanner(new File(path));
+            scanner = new Scanner(new File(path));
             String line = null;
             int x = 0;
 
             while (scanner.hasNextLine()) {
                 Director dir = new Director();//Def Constructor
                 line = scanner.nextLine();
-                String [] tempString = line.split(delimiter);
+                String[] tempString = line.split(delimiter);
 
                 dir.setNombre(tempString[0]);
                 dir.setFecha_nac(tempString[1]);
@@ -312,31 +336,32 @@ public class Model {
                 dir.setOcupacion(tempString[3]);
 
                 String[] obrasArray = tempString[4].split("\t");
-                for(String t : obrasArray){
-                dir.addObra(t);
+                for (String t : obrasArray) {
+                    dir.addObra(t);
                 }//Conjunto deobras
 
                 f.addDirectorGremio(dir);
             }
-        } catch(FileNotFoundException e) {
-        System.err.println("Caught FileNotFoundException: " + e.getMessage());
-        throw new RuntimeException(e);
-         }
+        } catch (FileNotFoundException e) {
+            System.err.println("Caught FileNotFoundException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }//Fin Metodo import_Directxt
 
     //------------------------------------------------------------------------------------
-    public void  addDirectorToCollection(Director nuevoDir){
+    public void addDirectorToCollection(Director nuevoDir) {
         f.addDirectorGremio(nuevoDir);
     }
+
     //------------------------------------------------------------------------------------
-       public boolean buscarDirectorYañadir(Pelicula peliculaObjetivo){
+    public boolean buscarDirectorYañadir(Pelicula peliculaObjetivo) {
 
         boolean exitencia = false;
 
 
-        for (String nombre : peliculaObjetivo.direccion){
-            for(Director dir : f.gremio_dir){
-                if(nombre.equals(dir.getNombre())){
+        for (String nombre : peliculaObjetivo.direccion) {
+            for (Director dir : f.gremio_dir) {
+                if (nombre.equals(dir.getNombre())) {
 
                     out.printf("Director encontrado\n");
                     out.printf("Añadiendo %s a sus obras...\n", peliculaObjetivo.getTitulo());
@@ -346,50 +371,49 @@ public class Model {
 
             }
 
-            if (exitencia == false){
+            if (exitencia == false) {
                 out.printf("No se encontró el director\nAñadiendo %s a directores...\n", nombre);
 
                 Director nuevoDirector = new Director();
-                 nuevoDirector.setNombre(nombre);
+                nuevoDirector.setNombre(nombre);
                 addDirectorToCollection(nuevoDirector);
             }
         }
 
 
-
         return exitencia;
-       }
+    }
     //------------------------------------------------------------------------------------
 
 
     //------------------------------------------------------------------------------------
 
-    public int buscarDirector(String nombreObjetivo){
+    public int buscarDirector(String nombreObjetivo) {
         int index = 0;
-        for(Director dr : f.getGremio_dir()){
-            if(nombreObjetivo.equals(dr.getNombre())){
+        for (Director dr : f.gremio_dir) {
+            if (nombreObjetivo.equals(dr.getNombre())) {
 
                 out.printf("Director encontrado, index %d\n", index);
-
+                break;
 
             }
             index++;
 
         }
 
-        return  index;
+        return index;
     }
     //------------------------------------------------------------------------------------
 
-    public boolean existeDirector(Director nombre){
+    public int existeDirector(Director nombre) {
 
-        boolean exitencia = false;
+        int exitencia = 0;
 
-        for(Director dr : f.getGremio_dir()){
-            if(nombre.getNombre().equals(dr.getNombre())){
+        for (Director dr : f.gremio_dir) {
+            if (nombre.getNombre().equals(dr.getNombre())) {
 
                 out.printf("Director encontrado\n");
-                exitencia = true;
+                exitencia = 0;
             }
 
         }
@@ -401,15 +425,15 @@ public class Model {
     //------------------------------------------------------------------------------------
     public void borrarDirector(String directorObjetivo) {
 
-        boolean borrable = true;
+        int borrable = 1;
         int indexDirector = buscarDirector(directorObjetivo);
         //Buscamos Peliculas
         for (String ta : f.gremio_dir.get(indexDirector).obras) {
             int x = 0;
-            for ( Pelicula ac : f.estanteria){
-                if(ta.equals(ac.getTitulo())){
+            for (Pelicula ac : f.estanteria) {
+                if (ta.equals(ac.getTitulo())) {
 
-                borrable = false;
+                    borrable = 0;
                 }
                 x++;
             }
@@ -417,10 +441,10 @@ public class Model {
 
 
         //borramos director si no tiene relaciones
-        if(borrable) {
+        if (borrable==1) {
             f.borrarDirectorGremio(indexDirector);
             out.printf("El director ha sido borrado\n");
-        }else{
+        } else {
             out.printf("El director no se pudo borrar debido a sus relaciones");
         }
 
@@ -430,14 +454,14 @@ public class Model {
 
 
     //------------------------------------------------------------------------------------
-    public void  modDirector(String nombreDirector){
+    public void modDirector(String nombreDirector) {
         Scanner sc = new Scanner(System.in);
-        String[] opMod = new String[]{"1", "2", "3"};
+        String[] opMod = new String[]{"1", "2", "3", "4"};
         String tempOpciones = null;
-        String menuMod = ("1) Fecha Nacimiento\n 2) Nacionalidad\n 3) Ocupación\n");
+        String menuMod = ("1) Fecha Nacimiento\n 2) Nacionalidad\n 3) Ocupación\n 4)Salida\n");
         int selecPeliculas = 0;
         int salidaPeliculas;
-        String mod =null;
+        String mod = null;
 
         for (Director pl : f.gremio_dir) {
             if (nombreDirector.equals(pl.getNombre())) {
@@ -466,9 +490,13 @@ public class Model {
                             mod = readString("Introduzca la nueva nacionalidad:   ");
                             pl.setNacionalidad(mod);
                             break;
+
                         case 3:
                             mod = readString("Introduzca la ocupacion:   ");
                             pl.setOcupacion(mod);
+                            break;
+                        case 4:
+                            salidaPeliculas = 1;
                             break;
 
 
@@ -484,24 +512,25 @@ public class Model {
 
 
     }//Fin modificacion
+
     //------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------
     //-------------     Funciones Actores       ------------------------------------------
-    public void import_Acttxt(String path){
+    public void import_Acttxt(String path) {
 
         String[] lines = new String[100];
         Scanner scanner;
 
-        try{
+        try {
 
-            scanner  = new Scanner(new File(path));
+            scanner = new Scanner(new File(path));
             String line = null;
             int x = 0;
 
             while (scanner.hasNextLine()) {
                 Actor act = new Actor();//Def Constructor
                 line = scanner.nextLine();
-                String [] tempString = line.split(delimiter);
+                String[] tempString = line.split(delimiter);
 
                 act.setNombre(tempString[0]);
                 act.setFecha_nac(tempString[1]);
@@ -509,15 +538,15 @@ public class Model {
                 act.setFecha_debut(tempString[3]);
 
                 String[] pelisArray = tempString[4].split("\t");
-                for(String t : pelisArray){
-                   act.addFeatured(t);
+                for (String t : pelisArray) {
+                    act.addFeatured(t);
                 }//Conjunto de trabajos
 
                 f.addActorGremio(act);
             }
 
 
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.err.println("Caught FileNotFoundException: " + e.getMessage());
             throw new RuntimeException(e);
         }
@@ -526,15 +555,15 @@ public class Model {
     //------------------------------------------------------------------------------------
     public void borrarActor(String actorObjetivo) {
 
-        boolean borrable = true;
+        int borrable = 1;
         int indexActor = buscarActor(actorObjetivo);
         //Buscamos Peliculas
         for (String ta : f.gremio_actor.get(indexActor).feature) {
             int x = 0;
-            for ( Pelicula ac : f.estanteria){
-                if(ta.equals(ac.getTitulo())){
+            for (Pelicula ac : f.estanteria) {
+                if (ta.equals(ac.getTitulo())) {
 
-                    borrable = false;
+                    borrable = 0;
                 }
                 x++;
             }
@@ -542,10 +571,10 @@ public class Model {
 
 
         //borramos director si no tiene relaciones
-        if(borrable) {
+        if (borrable==1){
             f.borrarActorGremio(indexActor);
             out.printf("El actor ha sido borrado\n");
-        }else{
+        } else {
             out.printf("El actor no se pudo borrar debido a sus relaciones");
         }
 
@@ -554,14 +583,14 @@ public class Model {
     //------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------
-    public void  modActor(String nombreActor){
+    public void modActor(String nombreActor) {
         Scanner sc = new Scanner(System.in);
-        String[] opMod = new String[]{"1", "2", "3"};
+        String[] opMod = new String[]{"1", "2", "3", "4"};
         String tempOpciones = null;
-        String menuMod = ("1) Fecha Nacimiento\n 2) Nacionalidad\n 3) Fecha Debut\n");
+        String menuMod = ("1) Fecha Nacimiento\n 2) Nacionalidad\n 3) Fecha Debut\n 4) Salir\n");
         int selecPeliculas = 0;
         int salidaPeliculas;
-        String mod =null;
+        String mod = null;
 
         for (Actor pl : f.getGremio_actor()) {
             if (nombreActor.equals(pl.getNombre())) {
@@ -594,7 +623,9 @@ public class Model {
                             mod = readString("Introduzca la nueva fecha de debut:   ");
                             pl.setFecha_debut(mod);
                             break;
-
+                        case 4:
+                          salidaPeliculas = 1;
+                            break;
 
                         default:
                             System.out.printf("No se encontró la opcion solicitada\n Reintentando...\n \n");
@@ -612,7 +643,7 @@ public class Model {
 
     //------------------------------------------------------------------------------------
 
-    public  void  mostrarActor(String actorObjetivo){
+    public void mostrarActor(String actorObjetivo) {
 
         String arrayString = null;
         String tableString = null;
@@ -620,12 +651,12 @@ public class Model {
         StringBuilder tableBuilder = new StringBuilder();
         ArrayList<Pelicula> obrasOrdenadas = new ArrayList();
         tableBuilder.append(String.format(
-                "|  %-55s  |  %-30s  |  %-30s  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n","Titulo", "Año", "Duración", "Pais", "Dirección", "Guión", "Música", "Fotografía", "Reparto", "Productora", "Genero", "Simnosis")); //Linea de Campos.
+                "|  %-55s  |  %-30s  |  %-30s  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n", "Titulo", "Año", "Duración", "Pais", "Dirección", "Guión", "Música", "Fotografía", "Reparto", "Productora", "Genero", "Simnosis")); //Linea de Campos.
         tableString = tableBuilder.toString();
         out.printf("%s", tableString);
 
         for (Pelicula peliTemp : f.estanteria) {
-            for(String act : peliTemp.reparto) {
+            for (String act : peliTemp.reparto) {
                 if (actorObjetivo.equals(act)) {
                     obrasOrdenadas.add(peliTemp);
 
@@ -633,7 +664,7 @@ public class Model {
             }
         }
 
-        Collections.sort(obrasOrdenadas, new Comparator<Pelicula>(){
+        Collections.sort(obrasOrdenadas, new Comparator<Pelicula>() {
 
             @Override
             public int compare(Pelicula o1, Pelicula o2) {
@@ -641,11 +672,11 @@ public class Model {
             }
 
         });
-            for(Pelicula p : obrasOrdenadas) {
-                arrayStringBuilder.append(String.format(
-                        "|  %-55s  |  %-30s  |  %-30.2f  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n", p.getTitulo(), p.getAno(), p.getDuracion(), p.getPais(), p.getDireccion(),
-                        p.getGuion(), p.getMusica(), p.getFotografia(), p.getReparto(), p.getProductora(), p.getGenero(), p.getSimnosis()));
-            }
+        for (Pelicula p : obrasOrdenadas) {
+            arrayStringBuilder.append(String.format(
+                    "|  %-55s  |  %-30s  |  %-30.2f  |  %-40s  |  %-50s  |  %-60s  |  %-50s  |  %-40s  |  %-110s  |  %-40s  |  %-40s  |  %-300s  |\n", p.getTitulo(), p.getAno(), p.getDuracion(), p.getPais(), p.getDireccion(),
+                    p.getGuion(), p.getMusica(), p.getFotografia(), p.getReparto(), p.getProductora(), p.getGenero(), p.getSimnosis()));
+        }
         arrayString = arrayStringBuilder.toString();
         out.printf("%s", arrayString);
     }//Fin Metodo mostrarPelicula
@@ -654,17 +685,18 @@ public class Model {
     //------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------
-    public void  addActorToCollection(Actor nuevoActor){
+    public void addActorToCollection(Actor nuevoActor) {
         f.addActorGremio(nuevoActor);
     }
+
     //------------------------------------------------------------------------------------
-    public boolean buscarRepartoYañadir(Pelicula peliculaObjetivo){
+    public boolean buscarRepartoYañadir(Pelicula peliculaObjetivo) {
 
         boolean exitencia = false;
 
-        for (String nombre : peliculaObjetivo.reparto){
-            for(Actor ac : f.gremio_actor){
-                if(nombre.equals(ac.getNombre())){
+        for (String nombre : peliculaObjetivo.reparto) {
+            for (Actor ac : f.gremio_actor) {
+                if (nombre.equals(ac.getNombre())) {
 
                     out.printf("Actor encontrado\n");
                     out.printf("Añadiendo %s a sus Trabajos...\n", peliculaObjetivo.getTitulo());
@@ -673,7 +705,7 @@ public class Model {
                 }
 
             }
-            if (exitencia == false){
+            if (exitencia == false) {
                 out.printf("No se encontró el actor\nAñadiendo %s a Actores...\n", nombre);
 
                 Actor nuevoActor = new Actor();
@@ -683,37 +715,36 @@ public class Model {
         }
 
 
-
         return exitencia;
     }
     //------------------------------------------------------------------------------------
 
-    public int buscarActor(String nombreObjetivo){
+    public int buscarActor(String nombreObjetivo) {
         int index = 0;
-        for(Actor ac : f.getGremio_actor()){
-            if(nombreObjetivo.equals(ac.getNombre())){
+        for (Actor ac : f.gremio_actor) {
+            if (nombreObjetivo.equals(ac.getNombre())) {
 
                 out.printf("Actpr encontrado, index %d\n", index);
-
+                break;
 
             }
             index++;
 
         }
 
-        return  index;
+        return index;
     }
 
     //------------------------------------------------------------------------------------
-    public boolean existeActor(Actor nombre){
+    public int existeActor(Actor nombre) {
 
-        boolean exitencia = false;
+        int exitencia = 0;
 
-        for(Actor ac : f.getGremio_actor()){
-            if(nombre.getNombre().equals(ac.getNombre())){
+        for (Actor ac : f.gremio_actor){
+            if (nombre.getNombre().equals(ac.getNombre())) {
 
                 out.printf("Actor encontrado\n");
-                exitencia = true;
+                exitencia = 1;
             }
 
         }
@@ -723,11 +754,11 @@ public class Model {
 
     //------------------------------------------------------------------------------------
 
-    public  String addHtmlRow(){
+    public String addHtmlRow() {
         String arrayString;
         StringBuilder arrayStringBuilder = new StringBuilder();
 
-        for(Pelicula peliTemp : f.estanteria){
+        for (Pelicula peliTemp : f.estanteria) {
 
             arrayStringBuilder.append(String.format("<TR>"
                             + "<TD>%s</TD>"
@@ -743,23 +774,23 @@ public class Model {
                             + "<TD>%s</TD>"
                             + "<TD>%s</TD>"
                             + "</TR>", peliTemp.getTitulo(), peliTemp.getAno(), peliTemp.getDuracion(), peliTemp.getPais(), peliTemp.getDireccion(),
-                             peliTemp.getGuion(), peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getReparto(), peliTemp.getProductora(), peliTemp.getGenero(), peliTemp.getSimnosis()));
+                    peliTemp.getGuion(), peliTemp.getMusica(), peliTemp.getFotografia(), peliTemp.getReparto(), peliTemp.getProductora(), peliTemp.getGenero(), peliTemp.getSimnosis()));
         }
         arrayString = arrayStringBuilder.toString();
         return arrayString;
-}//addHtmlRow
+    }//addHtmlRow
 
     //------------------------------------------------------------------------------------
 
-    public  String addColRow(){
+    public String addColRow() {
         String arrayCol;
         StringBuilder arrayColgBuilder = new StringBuilder();
 
-        for(Director dir : f.gremio_dir){
+        for (Director dir : f.gremio_dir) {
 
-            arrayColgBuilder.append(String.format("%-65s%-65s%-65s%-80s",dir.getNombre(),dir.getFecha_nac(),dir.getNacionalidad(),dir.getOcupacion())); //Linea de Campos.));
-            for(String s : dir.obras){
-                arrayColgBuilder.append(String.format("%-50s",s));
+            arrayColgBuilder.append(String.format("%-65s%-65s%-65s%-80s", dir.getNombre(), dir.getFecha_nac(), dir.getNacionalidad(), dir.getOcupacion())); //Linea de Campos.));
+            for (String s : dir.obras) {
+                arrayColgBuilder.append(String.format("%-50s", s));
             }
             arrayColgBuilder.append("\n");
         }
@@ -768,23 +799,23 @@ public class Model {
     }//addHtmlRow
 
     //------------------------------------------------------------------------------------
-    public void saveFilmsBin(String direccion ) {
+    public void saveFilmsBin(String direccion) {
 
-        out.printf("Estoy en SaveFilsmBin\n");
+        out.printf("Guardando <Filmoteca> en peliculas.bin...\n");
         ArrayList<Pelicula> tempArraylist = new ArrayList();
 
         for(Pelicula pl : f.estanteria){
             tempArraylist.add(pl);
-            for (Pelicula i : tempArraylist) {
-            out.printf("////////    %s\n",i.getTitulo());
-            }
+
         }
 
-        File binFilePeli= new File(direccion);
+
+        File binFilePeli = new File(direccion);
         FileOutputStream fos;
         BufferedOutputStream bos;
         ObjectOutputStream oos = null;
-        try { binFilePeli.createNewFile();
+        try {
+            binFilePeli.createNewFile();
 
             oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(binFilePeli)));
             oos.writeObject(tempArraylist);
@@ -799,14 +830,15 @@ public class Model {
                 oos.close();
             } catch (IOException e) {
                 System.out.println(e.toString());
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
         }
+        out.printf("peliculas.bin guardado correctamente.\n\n");
     }//Fin Metodo saveFilmsBin
 
     //------------------------------------------------------------------------------------
-    public ArrayList<Pelicula> import_PeliBin(String path){
+    public ArrayList<Pelicula> import_PeliBin(String path) {
 
         ObjectInputStream ois = null;
         FileInputStream fis;
@@ -814,42 +846,36 @@ public class Model {
         Pelicula peliculaTemp = new Pelicula();
         ArrayList<Pelicula> listaTemp = new ArrayList();
 
-         try {
-             fis = new FileInputStream(new File(path));
-             bis = new BufferedInputStream(fis);
-             ois = new ObjectInputStream(bis);
+        try {
+            fis = new FileInputStream(new File(path));
+            bis = new BufferedInputStream(fis);
+            ois = new ObjectInputStream(bis);
 
-             listaTemp = (ArrayList<Pelicula>)  ois.readObject();
-             ois.close();
-            out.printf("** %s\n", peliculaTemp.getTitulo());
-         }catch (Exception e){
-        System.out.println(e.toString());
-         }finally {
+            listaTemp = (ArrayList<Pelicula>) ois.readObject();
+            ois.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        } finally {
             try {
-               ois.close();
-              } catch (IOException e) {
+                ois.close();
+            } catch (IOException e) {
                 System.out.println(e.toString());
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
-             }
-         }
+            }
+        }
         return listaTemp;
     }//Fin Metodo PeliBin
 
     // ------------------------------------------------------------------------------------
-    public void saveActorBin( String direccion ) {
+    public void saveActorBin(String direccion) {
 
-        out.printf("Estoy en SaveActorsBin\n");
+        out.printf("Guardando <Actores> en actores.bin...\n");
         ArrayList<Actor> tempArraylist = new ArrayList();
 
         for (Actor pl : f.gremio_actor) {
             tempArraylist.add(pl);
-            for (Actor i : tempArraylist) {
 
-                out.printf("////////    %s\n", i.getNombre());
-
-
-            }
         }
 
         File binFilePeli = new File(direccion);
@@ -876,10 +902,11 @@ public class Model {
                 e.printStackTrace();
             }
         }
+        out.printf("peliculas.bin guardado correctamente.\n\n");
     }//Fin Metodo saveActorBin
 
     // ------------------------------------------------------------------------------------
-    public ArrayList<Actor> import_ActBin(String path){
+    public ArrayList<Actor> import_ActBin(String path) {
 
         ObjectInputStream ois = null;
         FileInputStream fis;
@@ -893,34 +920,33 @@ public class Model {
             bis = new BufferedInputStream(fis);
             ois = new ObjectInputStream(bis);
 
-            listaTemp = (ArrayList<Actor>)  ois.readObject();
+            listaTemp = (ArrayList<Actor>) ois.readObject();
             ois.close();
-            out.printf("** %s\n", peliculaTemp.getNombre());
-        }catch (Exception e){
+        } catch (Exception e) {
 
             System.out.println(e.toString());
-        }finally {
+        } finally {
 
             try {
                 ois.close();
             } catch (IOException e) {
                 System.out.println(e.toString());
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
         }
         return listaTemp;
     }
-    // ------------------------------------------------------------------------------------
-    public void saveDirectorBin(String direccion){
 
-        out.printf("Estoy en SaveDirectorBin\n");
+    // ------------------------------------------------------------------------------------
+    public void saveDirectorBin(String direccion) {
+
+        out.printf("Guardando <Directores> en directores.bin...\n");
         ArrayList<Director> tempArraylist = new ArrayList();
 
         for (Director pl : f.gremio_dir) {
             tempArraylist.add(pl);
             for (Director d : tempArraylist) {
-                out.printf("////////    %s\n", d.getNombre());
             }
         }
 
@@ -948,38 +974,38 @@ public class Model {
                 e.printStackTrace();
             }
         }
+        out.printf("directores.bin guardado correctamente.\n\n");
     }//Fin Metodo saveDirectorBin
 
     // ------------------------------------------------------------------------------------
-    public ArrayList<Director> import_DirBin(String path){
+    public ArrayList<Director> import_DirBin(String path) {
 
         ObjectInputStream ois = null;
         FileInputStream fis;
         BufferedInputStream bis;
         Director peliculaTemp = new Director();
-                ArrayList<Director> listaTemp = new ArrayList();
+        ArrayList<Director> listaTemp = new ArrayList();
 
         try {
             fis = new FileInputStream(new File(path));
             bis = new BufferedInputStream(fis);
             ois = new ObjectInputStream(bis);
 
-            listaTemp = (ArrayList<Director>)  ois.readObject();
+            listaTemp = (ArrayList<Director>) ois.readObject();
 
             ois.close();
-            out.printf("** %s\n", peliculaTemp.getNombre());
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
 
-        }finally {
+        } finally {
             try {
                 ois.close();
 
             } catch (IOException e) {
                 System.out.println(e.toString());
 
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 e.printStackTrace();
 
             }
@@ -989,7 +1015,7 @@ public class Model {
     }
     // ------------------------------------------------------------------------------------
 
-    public void listaPeliculas(){
+    public void listaPeliculas() {
 
         String arrayString = null;
         String tableString = null;
@@ -999,21 +1025,19 @@ public class Model {
 
 
         tableBuilder.append(String.format(
-                "|  %-55s  |  %-30s  |  %-30s  |  %-40s  |  %-40s  |\n","Titulo", "Año", "Duración", "Pais", "Genero")); //Linea de Campos.
+                "|  %-55s  |  %-30s  |  %-30s  |  %-40s  |  %-40s  |\n", "Titulo", "Año", "Duración", "Pais", "Genero")); //Linea de Campos.
         tableString = tableBuilder.toString();
         out.printf("%s", tableString);
 
 
-
         for (Pelicula peliTemp : f.estanteria) {
 
-                    obrasOrdenadas.add(peliTemp);
-
+            obrasOrdenadas.add(peliTemp);
 
 
         }
 
-        Collections.sort(obrasOrdenadas, new Comparator<Pelicula>(){
+        Collections.sort(obrasOrdenadas, new Comparator<Pelicula>() {
 
             @Override
             public int compare(Pelicula o1, Pelicula o2) {
@@ -1021,7 +1045,7 @@ public class Model {
             }
 
         });
-        for(Pelicula p : obrasOrdenadas) {
+        for (Pelicula p : obrasOrdenadas) {
             arrayStringBuilder.append(String.format(
                     "|  %-55s  |  %-30s  |  %-30.2f  |  %-40s  |  %-40s  |\n", p.getTitulo(), p.getAno(), p.getDuracion(), p.getPais(), p.getGenero()));
         }
@@ -1032,7 +1056,7 @@ public class Model {
 
     // ------------------------------------------------------------------------------------
 
-    public void listaDirectores(){
+    public void listaDirectores() {
 
         String arrayString = null;
         String tableString = null;
@@ -1041,13 +1065,11 @@ public class Model {
         ArrayList<Director> directoresOrdenadas = new ArrayList();
 
 
-
         tableBuilder.append(String.format(
-                "|  %-55s  |  %-50s  |  %-50s  |  %-80s  |\n","Nombre", "Fecha de nacimiento", "Nacionalidad", "Ocupación")); //Linea de Campos.
+                "|  %-55s  |  %-50s  |  %-50s  |  %-80s  |\n", "Nombre", "Fecha de nacimiento", "Nacionalidad", "Ocupación")); //Linea de Campos.
 
         tableString = tableBuilder.toString();
         out.printf("%s", tableString);
-
 
 
         for (Director directorTemp : f.gremio_dir) {
@@ -1055,13 +1077,10 @@ public class Model {
             directoresOrdenadas.add(directorTemp);
 
 
-
         }
 
 
-
-
-        Collections.sort(directoresOrdenadas, new Comparator<Director>(){
+        Collections.sort(directoresOrdenadas, new Comparator<Director>() {
 
             @Override
             public int compare(Director o1, Director o2) {
@@ -1069,7 +1088,7 @@ public class Model {
             }
         });
 
-        Collections.sort(directoresOrdenadas, new Comparator<Director>(){
+        Collections.sort(directoresOrdenadas, new Comparator<Director>() {
             @Override
             public int compare(Director o1, Director o2) {
                 return o1.getNacionalidad().compareTo(o2.getNacionalidad());
@@ -1077,10 +1096,9 @@ public class Model {
         });
 
 
-
-        for(Director p : directoresOrdenadas) {
+        for (Director p : directoresOrdenadas) {
             arrayStringBuilder.append(String.format(
-                    "|  %-55s  |  %-50s  |  %-50s  |  %-80s  |\n",p.getNombre(), p.getFecha_nac(), p.getNacionalidad(), p.getOcupacion()));
+                    "|  %-55s  |  %-50s  |  %-50s  |  %-80s  |\n", p.getNombre(), p.getFecha_nac(), p.getNacionalidad(), p.getOcupacion()));
         }
         arrayString = arrayStringBuilder.toString();
         out.printf("%s", arrayString);
@@ -1089,7 +1107,7 @@ public class Model {
 
     // ------------------------------------------------------------------------------------
 
-    public void listaActores(){
+    public void listaActores() {
 
         String arrayString = null;
         String tableString = null;
@@ -1099,11 +1117,10 @@ public class Model {
 
 
         tableBuilder.append(String.format(
-                "|  %-55s  |  %-50s  |  %-50s  |  %-50s  |\n","Nombre", "Fecha de nacimiento", "Nacionalidad", "Año Debut")); //Linea de Campos.
+                "|  %-55s  |  %-50s  |  %-50s  |  %-50s  |\n", "Nombre", "Fecha de nacimiento", "Nacionalidad", "Año Debut")); //Linea de Campos.
 
         tableString = tableBuilder.toString();
         out.printf("%s", tableString);
-
 
 
         for (Actor actTemp : f.gremio_actor) {
@@ -1111,11 +1128,10 @@ public class Model {
             actoresOrdenadas.add(actTemp);
 
 
-
         }
 
 
-        Collections.sort(actoresOrdenadas, new Comparator<Actor>(){
+        Collections.sort(actoresOrdenadas, new Comparator<Actor>() {
 
             @Override
             public int compare(Actor o1, Actor o2) {
@@ -1123,7 +1139,7 @@ public class Model {
             }
 
         });
-        Collections.sort(actoresOrdenadas, new Comparator<Actor>(){
+        Collections.sort(actoresOrdenadas, new Comparator<Actor>() {
 
             @Override
             public int compare(Actor o1, Actor o2) {
@@ -1133,16 +1149,14 @@ public class Model {
         });
 
 
-        for(Actor p : actoresOrdenadas) {
+        for (Actor p : actoresOrdenadas) {
             arrayStringBuilder.append(String.format(
-                    "|  %-55s  |  %-50s  |  %-50s  |  %-50s  |\n",p.getNombre(), p.getFecha_nac(), p.getNacionalidad(), p.getFecha_debut()));
+                    "|  %-55s  |  %-50s  |  %-50s  |  %-50s  |\n", p.getNombre(), p.getFecha_nac(), p.getNacionalidad(), p.getFecha_debut()));
         }
         arrayString = arrayStringBuilder.toString();
         out.printf("%s", arrayString);
 
     }
-
-
 
 
 }//Fin Model

@@ -1,9 +1,10 @@
 package model;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Actor {
-
+public class Actor implements Serializable{
+    private static final long serialVersionUID = 1L;
     private  String nombre;
     private  String fecha_nac;
     private String nacionalidad;
