@@ -1023,8 +1023,7 @@ public class Model {
         });
         for(Pelicula p : obrasOrdenadas) {
             arrayStringBuilder.append(String.format(
-                    "|  %-55s  |  %-30s  |  %-30.2f  |  %-40s  |  %-40s  |\n", p.getTitulo(), p.getAno(), p.getDuracion(), p.getPais(), p.getDireccion(),
-                    p.getGuion(), p.getMusica(), p.getFotografia(), p.getReparto(), p.getProductora(), p.getGenero(), p.getSimnosis()));
+                    "|  %-55s  |  %-30s  |  %-30.2f  |  %-40s  |  %-40s  |\n", p.getTitulo(), p.getAno(), p.getDuracion(), p.getPais(), p.getGenero()));
         }
         arrayString = arrayStringBuilder.toString();
         out.printf("%s", arrayString);
@@ -1044,7 +1043,7 @@ public class Model {
 
 
         tableBuilder.append(String.format(
-                "|  %-55s  |  %-50s  |  %-50s  |  %-50s  |\n","Nombre", "Fecha de nacimiento", "Nacionalidad", "Ocupación")); //Linea de Campos.
+                "|  %-55s  |  %-50s  |  %-50s  |  %-80s  |\n","Nombre", "Fecha de nacimiento", "Nacionalidad", "Ocupación")); //Linea de Campos.
 
         tableString = tableBuilder.toString();
         out.printf("%s", tableString);
@@ -1059,13 +1058,9 @@ public class Model {
 
         }
 
-        Collections.sort(directoresOrdenadas, new Comparator<Director>(){
 
-            @Override
-            public int compare(Director o1, Director o2) {
-                return o1.getNacionalidad().compareTo(o2.getNacionalidad());
-            }
-                   });
+
+
         Collections.sort(directoresOrdenadas, new Comparator<Director>(){
 
             @Override
@@ -1074,11 +1069,18 @@ public class Model {
             }
         });
 
+        Collections.sort(directoresOrdenadas, new Comparator<Director>(){
+            @Override
+            public int compare(Director o1, Director o2) {
+                return o1.getNacionalidad().compareTo(o2.getNacionalidad());
+            }
+        });
+
 
 
         for(Director p : directoresOrdenadas) {
             arrayStringBuilder.append(String.format(
-                    "|  %-55s  |  %-50s  |  %-50s  |  %-50s  |\n",p.getNombre(), p.getFecha_nac(), p.getNacionalidad(), p.getOcupacion()));
+                    "|  %-55s  |  %-50s  |  %-50s  |  %-80s  |\n",p.getNombre(), p.getFecha_nac(), p.getNacionalidad(), p.getOcupacion()));
         }
         arrayString = arrayStringBuilder.toString();
         out.printf("%s", arrayString);

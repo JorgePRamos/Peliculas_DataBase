@@ -481,7 +481,7 @@ public void altaPelicula(){
         String tempArrayList;
 
         ArrayList<String> obras = new ArrayList();
-        tempArrayList = readString("Introduzca el/los nombres de las obras separadas por < , >\n");
+        tempArrayList = readString("Introduzca el nombre de las peliculas de altor  separadas por < , >\n");
         String[] tempObras = tempArrayList.split(",");
         for(String t : tempObras){
             actorIntroducida.addFeatured(t);
@@ -490,7 +490,7 @@ public void altaPelicula(){
 
 
         String nombre = "-";
-        nombre = readString("Introduzca el nombre del director.\n");
+        nombre = readString("Introduzca el nombre del actor.\n");
         actorIntroducida.setNombre(nombre);
 
         String fecha_nac = "-";
@@ -503,7 +503,7 @@ public void altaPelicula(){
         actorIntroducida.setNacionalidad(nacionalidad);
 
         String fechaDebut = "-";
-        fechaDebut = readString("Introduzca la ocupación\n");
+        fechaDebut = readString("Introduzca la fecha de debut\n");
         actorIntroducida.setFecha_debut(fechaDebut);
 
 
