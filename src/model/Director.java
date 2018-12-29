@@ -1,5 +1,4 @@
 package model;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,21 +8,20 @@ public class Director implements Serializable {
     private String fecha_nac;
     private String nacionalidad;
     private String ocupacion;
-     ArrayList<String> obras = new ArrayList();
+    ArrayList<String> obras = new ArrayList();
 
 
-
-    //------------------------------------------------------
-//---------        Constructors     --------------------
-
+    //----------------------------------------------------------------------------------------------
+    //---------------------          Constructors             --------------------------------------
     public Director() {//Default Constructor
         this.nombre = "Fulanito de Tal";
         this.fecha_nac = "DD/MM/YYYY";
         this.nacionalidad = "La Tierra";
         this.ocupacion = "Blade Runner Retirado";
     }
-    //------------------------------------------------------
-    // -------     Adders and Getters      -----------------
+
+    //----------------------------------------------------------------------------------------------
+    //---------------------          Adders and Getters              -------------------------------
     public ArrayList<String> getObras() {
         return obras;
     }
@@ -38,9 +36,8 @@ public class Director implements Serializable {
 
     }
 
-    //------------------------------------------------------
-    // -------     Setters and Getters      ----------------
-
+    //----------------------------------------------------------------------------------------------
+    //---------------------          Setters and Getters              -------------------------------
     public String getNombre() {
         return nombre;
     }
@@ -72,7 +69,5 @@ public class Director implements Serializable {
     public void setOcupacion(String ocupacion) {
         this.ocupacion = ocupacion;
     }
-
-
 
 }//Fin clase Director

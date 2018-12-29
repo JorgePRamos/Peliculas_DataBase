@@ -1,5 +1,4 @@
 package model;
-
 import java.util.ArrayList;
 import java.io.Serializable;
 
@@ -9,11 +8,10 @@ public class Actor implements Serializable{
     private  String fecha_nac;
     private String nacionalidad;
     private  String fecha_debut;
-     ArrayList<String> feature = new ArrayList();
+    ArrayList<String> feature = new ArrayList();
 
-
-    //------------------------------------------------------
-//---------        Constructors     --------------------
+    //----------------------------------------------------------------------------------------------
+//---------------------          Constructors             ------------------------------------------
 
     public Actor() {//Default Constructor
         this.nombre = "Fulanito de Tal";
@@ -22,27 +20,23 @@ public class Actor implements Serializable{
         this.fecha_debut = "DD/MM/YYYY";
     }
 
-
-    //------------------------------------------------------
-    // -------     Adders and Getters      -----------------
-
+    //----------------------------------------------------------------------------------------------
+    //---------------------          Adders and Getters             --------------------------------
     public ArrayList<String> getFeatures() {
         return feature;
     }
 
     public void addFeatured(String nuevaActuacion) {
         this.feature.add(nuevaActuacion);
-        }
-
-
+    }
 
     public  void borrarFeature(int index){
         this.feature.remove(index);
 
     }
 
-    //------------------------------------------------------
-    // -------     Setters and Getters      ----------------
+    //----------------------------------------------------------------------------------------------
+    //---------------------          Setters and Getters            --------------------------------
     public String getNombre() {
         return nombre;
     }

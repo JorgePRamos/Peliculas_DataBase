@@ -75,21 +75,6 @@ public class Model {
             throw new RuntimeException(e);
         }
 
-        /*
-        int n = 0;
-        for (Pelicula pl : f.estanteria){
-            out.printf("**********Estoy intentando modifica el padrino**********\n");
-            out.printf("***********     Este es <%s>      ***********\n", pl.getTitulo());
-            String titulo = "El padrino";
-            String pelicualActual = pl.getTitulo();
-            if(titulo.equals(pl.getTitulo())){
-                out.printf("************    Encontre al padrino %d  *********\n", n);
-                pl.setTitulo("El tontino2");
-            }
-            n++;
-
-        }
-        */
     }//Fin Metodo importPeli
 
     //------------------------------------------------------------------------------------
@@ -440,7 +425,7 @@ public class Model {
         }
 
 
-        //borramos director si no tiene relaciones
+        //Borramos director si no tiene relaciones
         if (borrable==1) {
             f.borrarDirectorGremio(indexDirector);
             out.printf("El director ha sido borrado\n");
@@ -514,7 +499,6 @@ public class Model {
     }//Fin modificacion
 
     //------------------------------------------------------------------------------------
-    //------------------------------------------------------------------------------------
     //-------------     Funciones Actores       ------------------------------------------
     public void import_Acttxt(String path) {
 
@@ -580,7 +564,6 @@ public class Model {
 
 
     }
-    //------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------
     public void modActor(String nombreActor) {
@@ -639,10 +622,8 @@ public class Model {
 
 
     }//Fin modificacion Actor
-    //------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------
-
     public void mostrarActor(String actorObjetivo) {
 
         String arrayString = null;
@@ -682,7 +663,6 @@ public class Model {
     }//Fin Metodo mostrarPelicula
 
 
-    //------------------------------------------------------------------------------------
 
     //------------------------------------------------------------------------------------
     public void addActorToCollection(Actor nuevoActor) {
@@ -1076,9 +1056,7 @@ public class Model {
 
             directoresOrdenadas.add(directorTemp);
 
-
         }
-
 
         Collections.sort(directoresOrdenadas, new Comparator<Director>() {
 
@@ -1106,7 +1084,6 @@ public class Model {
     }
 
     // ------------------------------------------------------------------------------------
-
     public void listaActores() {
 
         String arrayString = null;
@@ -1129,7 +1106,6 @@ public class Model {
 
 
         }
-
 
 
         Collections.sort(actoresOrdenadas, new Comparator<Actor>() {
@@ -1158,6 +1134,5 @@ public class Model {
         out.printf("%s", arrayString);
 
     }
-
 
 }//Fin Model

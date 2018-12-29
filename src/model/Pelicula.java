@@ -1,11 +1,12 @@
 package model;
-
 import java.util.ArrayList;
 import java.io.Serializable;
+
 public class Pelicula implements Serializable{
+
     private static final long serialVersionUID = 1L;
-     ArrayList<String> direccion = new ArrayList();
-      ArrayList<String> reparto = new ArrayList();
+    ArrayList<String> direccion = new ArrayList();
+    ArrayList<String> reparto = new ArrayList();
     private String titulo;
     private String ano;
     private Float duracion = 0f; //Separados por < . >
@@ -17,10 +18,10 @@ public class Pelicula implements Serializable{
     private String simnosis;
     private  String genero;
 
-//------------------------------------------------------
-//---------        Constructors     --------------------
+    //----------------------------------------------------------------------------------------------
+    //---------------------          Constructors              -------------------------------------
 
-    public Pelicula() {//Default COnstructor
+    public Pelicula() {//Default Constructor
         this.titulo = "Empty Title";
         this.ano = "DD/MM/YYYY";
         this.duracion = 0f;
@@ -32,9 +33,9 @@ public class Pelicula implements Serializable{
         this.fotografia = "ACME";
         this.simnosis = "Blank";
     }
-    //------------------------------------------------------
-    // -------     Adders and Getters      -----------------
 
+    //----------------------------------------------------------------------------------------------
+    //---------------------          Adders and Getters               ------------------------------
     public ArrayList<String> getDireccion() {
         return direccion;
     }
@@ -43,11 +44,11 @@ public class Pelicula implements Serializable{
        this.direccion.add(nuevoDirector);
     }
 
-
     public  void borrarDirector(int index){
         this.direccion.remove(index);
 
     }
+
     public void borrarTodaDireccion (){
         this.direccion.removeAll(direccion);
 
@@ -71,9 +72,8 @@ public class Pelicula implements Serializable{
 
     }
 
-    //------------------------------------------------------
-    // -------     Setters and Getters      ----------------
-
+    //----------------------------------------------------------------------------------------------
+    //---------------------          Setters and Getters               -----------------------------
     public String getGenero() { return genero; }
 
     public void setGenero(String genero) { this.genero = genero; }
@@ -149,4 +149,5 @@ public class Pelicula implements Serializable{
     public void setSimnosis(String simnosis) {
         this.simnosis = simnosis;
     }
+
 }//Fin clase Pelicula

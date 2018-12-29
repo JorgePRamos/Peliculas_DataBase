@@ -28,8 +28,6 @@ public class Controller {
         m.saveActorBin(ruta+"actores.bin");
         m.saveDirectorBin(ruta +"directores.bin");
 
-
-
         out.printf("Saliendo del programa...\n");
     }//Fin Metodo salidaProg
 
@@ -38,20 +36,16 @@ public class Controller {
     public void arranque(){
         boolean exist;
 
-
-
         File peliculaPath = new File(ruta + "peliculas.bin");//Ruta binario peliculas.
         File actoresPath = new File(ruta + "actores.bin");//Ruta binario actores.
         File directoresPath = new File(ruta + "directores.bin");//Ruta binario directores.
         //----------------------------------------------------------------------------------------------
-
 
         if(peliculaPath.exists()){//Comprobamos si existen las los binarios de las Peliculas.
             out.printf("Existe peliculas.bin\n");
            ArrayList<Pelicula> pt = (m.import_PeliBin(ruta + "peliculas.bin"));
            for(Pelicula o : pt){
                m.addFilmToCollection(o);
-
            }
             out.printf("Importando peliculas desde películas.bin.\nEspere....\n\n");
 
@@ -63,12 +57,9 @@ public class Controller {
 
             m.import_Pelitxt(txtPeliPath);
 
+        }
 
-
-
-     }
         //----------------------------------------------------------------------------------------------
-
         if(actoresPath.exists()){//Comprobamos si existen las los binarios de las Actores.
             System.out.printf("Existe actores.bin\n");
             ArrayList<Actor> pt = (m.import_ActBin(ruta + "actores.bin"));
@@ -86,15 +77,16 @@ public class Controller {
             m.import_Acttxt(txtActPath);//importar fichero .txt
 
         }
-        //----------------------------------------------------------------------------------------------
 
+        //----------------------------------------------------------------------------------------------
         if(directoresPath.exists()){//Comprobamos si existen las los binarios de las Directores.
             System.out.printf("Existe directores.bin\n");
             ArrayList<Director> pt = (m.import_DirBin(ruta + "directores.bin"));
+
             for(Director o : pt){
                 m.addDirectorToCollection(o);
-
             }
+
             out.printf("Importando directores desde directores.bin.\nEspere....\n\n");
 
         }else{//No exixte binario directores.
@@ -109,21 +101,19 @@ public class Controller {
 
     }//Fin Metodo Arranque
 
+    //----------------------------------------------------------------------------------------------
+    public void archivo(){
+            archivoHtml();
+            archivoCol();
+    }
 
-    //---------------------------------------------------------------------------------------------
-public void archivo(){
-        archivoHtml();
-        archivoCol();
-}
+    public void archivoHtml() {
 
-public void archivoHtml() {
-
-        //--------  HTML    -------
-
-        //--------  HTML_FORMATO    -------
+        //-------------------------          HTML            ---------------------------------------
 
         out.printf("Exportado Peliculas en formato Html ---> peliculas.html\n");
         StringBuilder htmlFileSBuilder = new StringBuilder();
+
         htmlFileSBuilder.append("<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" +
                 "<style>\n" +
                 "table, th, td {\n" +
@@ -138,8 +128,10 @@ public void archivoHtml() {
                 "}\n" +
                 "</style>\n" +
                 "</head>\n");//Head
+
         htmlFileSBuilder.append("<body>\n" + "<h2>Tabla Peliculas Filmoteca</h2>\n" +
                 "<table style=\"width:100%\">");//Body
+
         htmlFileSBuilder.append("<tr>\n" +
                 "    <th>Titulo</th>\n" +
                 "    <th>Año</th> \n" +
@@ -155,57 +147,35 @@ public void archivoHtml() {
                 "    <th>Simnosis</th> \n" +
                 "  </tr>"); //Linea de Campos.
 
-        //--------  HTML_Filas   -------
-
+        //-------------------------         HTML_Filas           --------------------------------------
         int n = f.getNpeliculas();
-        //for(int x=0;x<n;x++){
         htmlFileSBuilder.append(m.addHtmlRow());
 //   }
-        //--------  HTML_Cierre   -------
-
+        //-------------------------         HTML_Cierre           -----------------------------------
         htmlFileSBuilder.append("</table>\n" +
                 "\n" +
                 "</body>\n" +
                 "</html>");
 
-
         escribirFichero(htmlFileSBuilder.toString(), "peliculas.html");
-
 
     }
 
-
-public void archivoCol() {
-        //--------  Ficheros_COL    -------
+    //----------------------------------------------------------------------------------------------
+    public void archivoCol() {
+        //-------------------------          Ficheros_Col            -------------------------------
         out.printf("Exportado Directores ---> directores.col\n");
         String tableString = null;
         StringBuilder tableBuilder = new StringBuilder();
-        tableBuilder.append(String.format("%-65s%-65s%-65s%-80s%-50s\n", "Nombre", "Fecha de nacimiento", "Nacionalidad", "Ocupación", "Obras")); //Linea de Campos.)); //Linea de Campos.
 
+//        tableBuilder.append(String.format("%-65s%-65s%-65s%-80s%-50s\n", "Nombre", "Fecha de nacimiento", "Nacionalidad", "Ocupación", "Obras")); //Descomentar para obtener nombres de los campos en directores.col
         tableBuilder.append(m.addColRow());
-
-
         escribirFicheroCol(tableBuilder.toString(), "directores.col");
 
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
 //Fin Metodo Archivo.
 
-
-
-
+    //----------------------------------------------------------------------------------------------
     public void escribirFichero(String contenido,  String nombreFichero){
         String tempFile = ruta + nombreFichero;
         File file = new File(tempFile);
@@ -219,19 +189,19 @@ public void archivoCol() {
                 out.printf("Error en la creación de: peliculas.html\n");
             }
         }
-try {
-    OutputStream outputStream = new FileOutputStream(file.getAbsoluteFile());
-    Writer writer = new OutputStreamWriter(outputStream);
-    writer.write(contenido);
-    writer.close();
-}catch (Exception e){
+        try {
+            OutputStream outputStream = new FileOutputStream(file.getAbsoluteFile());
+            Writer writer = new OutputStreamWriter(outputStream);
+            writer.write(contenido);
+            writer.close();
+        }catch (Exception e){
+        out.printf("Error al escribir:  directores.col\n");
+        System.out.println(e.toString());
+        }
 
-    out.printf("Error al escribir:  directores.col\n");
-    System.out.println(e.toString());
-}
-    }
+    }//Fin escribir Fichero
 
-
+    //----------------------------------------------------------------------------------------------
     public void escribirFicheroCol(String cont,  String nombreFichero) {
         Path path = Paths.get(ruta + nombreFichero);
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
@@ -240,12 +210,10 @@ try {
             System.err.format("IOException: %s%n", x);
         }
 
-    }
+    }//Fin escribit fichero col
 
-//---------------------------------------------------------------------------------
-    //-------------------   Consultas Peliculas ----------------------------------
-//---------------------------------------------------------------------------------
-
+    //----------------------------------------------------------------------------------------------
+// -------------------           Consultas Peliculas         ---------------------------------------
 public void altaPelicula(){
 
     Scanner sc = new Scanner(System.in);
@@ -253,18 +221,18 @@ public void altaPelicula(){
     String tempArrayList;
 
      ArrayList<String> direccion = new ArrayList();
-    tempArrayList = readString("Introduzca el/los nombres de los directores separados por < , >\n");
+        tempArrayList = readString("Introduzca el/los nombres de los directores separados por < , >\n");
         String[] tempDirectores = tempArrayList.split(",");
-             for(String t : tempDirectores){
-              peliculaIntroducida.addDirector(t);
-             }//Conjunto de directores
+        for(String t : tempDirectores){
+            peliculaIntroducida.addDirector(t);
+        }//Conjunto de directores
 
      ArrayList<String> reparto = new ArrayList();
-    tempArrayList = readString("Introduzca los nombres de los miembros del reparto separados por < , >\n");
-    String[] tempActores = tempArrayList.split(",");
-    for(String t : tempActores){
-        peliculaIntroducida.addActor(t);
-    }//Conjunto de actores
+     tempArrayList = readString("Introduzca los nombres de los miembros del reparto separados por < , >\n");
+        String[] tempActores = tempArrayList.split(",");
+        for(String t : tempActores){
+             peliculaIntroducida.addActor(t);
+         }//Conjunto de actores
 
      String titulo = "-";
         titulo = readString("Introduzca el titulo de la obra.\n");
@@ -288,11 +256,11 @@ public void altaPelicula(){
 
      String musica = "-";
          musica = readString("Introduzca el autor de la banda sonora\n");
-        peliculaIntroducida.setMusica(musica);
+         peliculaIntroducida.setMusica(musica);
 
      String fotografia = "-";
          fotografia = readString("Introduzca el nombre del director de fotografía\n");
-        peliculaIntroducida.setFotografia(fotografia);
+         peliculaIntroducida.setFotografia(fotografia);
 
      String productora = "-";
         productora = readString("Introduzca el nombre de la productora\n");
@@ -303,8 +271,8 @@ public void altaPelicula(){
         peliculaIntroducida.setSimnosis(simnosis);
 
     String genero = "---";
-    genero = readString("Introduzca el genero\n");
-        peliculaIntroducida.setGenero(genero);
+         genero = readString("Introduzca el genero\n");
+         peliculaIntroducida.setGenero(genero);
 
 
     int exixtencia = m.existePelicula(peliculaIntroducida);
@@ -316,71 +284,57 @@ public void altaPelicula(){
 
     m.buscarRepartoYañadir(peliculaIntroducida);
 
-
-
-
 }//Fin altaPelicula
 
-    //--------------------------------------------------------
-
+    //----------------------------------------------------------------------------------------------
     public  void  bajasPelicula(){
 
         String nombrePeliculaObejetivo;
         nombrePeliculaObejetivo = readString("Introduzca el nombre de la película que desea borrar\n");
         Pelicula peliabuscar = new Pelicula();
-
         peliabuscar.setTitulo(nombrePeliculaObejetivo);
 
         if (m.existePelicula(peliabuscar) == 0){
             out.printf("La pelicula %s introducida no se encuentra en la bases de datos.\n", nombrePeliculaObejetivo);
-
         }else{
             m.borrarPelicula(nombrePeliculaObejetivo);
-
-    }
-
-
+         }
 
     }//Fin Metodo Bajas Peliculas
 
-    //------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     public  void modPeliculas(){
+
         String nombrePeliculaObejetivo;
         nombrePeliculaObejetivo = readString("Introduzca el nombre de la película que desea modificar\n");
-
         m.modPelicula(nombrePeliculaObejetivo);
-
 
     }//Fin Metodo modPeliculas
 
-    //------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
    public  void mostrarPelicula(){
 
        String nombrePeliculaObejetivo;
        nombrePeliculaObejetivo = readString("Introduzca el nombre de la película que desea mostrar\n");
         m.mostrarPelicula(nombrePeliculaObejetivo);
 
-   }
+   }//Fin mostrsrPelicula
 
-//---------------------------------------------------------------------------------
-
-    //---------------------------------------------------------------------------------
-    //-------------------   Consultas Directores ----------------------------------
-//---------------------------------------------------------------------------------
-
+    //----------------------------------------------------------------------------------------------
+    //-------------------       Consultas Directores    --------------------------------------------
     public void altaDirector(){
 
         Scanner sc = new Scanner(System.in);
         Director directorIntroducida = new Director();
         String tempArrayList;
-
         ArrayList<String> obras = new ArrayList();
+
+
         tempArrayList = readString("Introduzca el/los nombres de las obras separadas por < , >\n");
         String[] tempObras = tempArrayList.split(",");
         for(String t : tempObras){
             directorIntroducida.addObra(t);
         }//Conjunto de obras
-
 
 
         String nombre = "-";
@@ -400,47 +354,31 @@ public void altaPelicula(){
         ocupacion = readString("Introduzca la ocupación\n");
         directorIntroducida.setOcupacion(ocupacion);
 
-
         int exixtencia = m.existeDirector(directorIntroducida);
         if (exixtencia == 0) {
             m.addDirectorToCollection(directorIntroducida);
         }
 
        // m.buscarObraYañadir(directorIntroducida);
-
-
-
-
-
     }//Fin altaPelicula
 
-
-    //--------------------------------------------------------
-
-
+    //----------------------------------------------------------------------------------------------
     public  void  bajasDirector(){
-
         String nombreDirectorObjetivo;
+
         nombreDirectorObjetivo = readString("Introduzca el nombre del director que desea borrar\n");
         Director directorBuscar = new Director();
-
         directorBuscar.setNombre(nombreDirectorObjetivo);
 
         if (m.existeDirector(directorBuscar) == 0){
             out.printf("El director %s introducido no se encuentra en la bases de datos.\n", nombreDirectorObjetivo);
-
         }else{
             m.borrarDirector(nombreDirectorObjetivo);
-
         }
-
-
 
     }//Fin Metodo Bajas Peliculas
 
-    //------------------------------------------------------
-
-    //------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     public  void modDirector(){
         String nombreDirectorObejetivo;
         nombreDirectorObejetivo = readString("Introduzca el nombre del director que desea modificar\n");
@@ -450,26 +388,21 @@ public void altaPelicula(){
 
     }//Fin Metodo modDirectores
 
-    //------------------------------------------------------
-
-
-    //---------------------------------------------------------------------------------
-    //-------------------   Consultas Directores ----------------------------------
-//---------------------------------------------------------------------------------
-
+    //----------------------------------------------------------------------------------------------
+    //-------------------          Consultas Directores           ----------------------------------
     public void altaActor(){
 
         Scanner sc = new Scanner(System.in);
         Actor actorIntroducida = new Actor();
         String tempArrayList;
-
         ArrayList<String> obras = new ArrayList();
+
+
         tempArrayList = readString("Introduzca el nombre de las peliculas de altor  separadas por < , >\n");
         String[] tempObras = tempArrayList.split(",");
         for(String t : tempObras){
             actorIntroducida.addFeatured(t);
         }//Conjunto de obras
-
 
 
         String nombre = "-";
@@ -495,40 +428,25 @@ public void altaPelicula(){
             m.addActorToCollection(actorIntroducida);
         }
 
-
-
-
-
-
     }//Fin alta Actor
 
-    //--------------------------------------------------------
-
-
+    //----------------------------------------------------------------------------------------------
     public  void  bajasActor(){
 
         String nombreActorObjetivo;
         nombreActorObjetivo = readString("Introduzca el nombre del actor que desea borrar\n");
         Actor actorBuscar = new Actor();
-
         actorBuscar.setNombre(nombreActorObjetivo);
 
         if (m.existeActor(actorBuscar) == 0){
             out.printf("El actor %s introducido no se encuentra en la bases de datos.\n", nombreActorObjetivo);
-
         }else{
             m.borrarActor(nombreActorObjetivo);
-
         }
-
-
 
     }//Fin Metodo Bajas Actor
 
-    //------------------------------------------------------
-
-
-    //------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     public  void modActor(){
         String nombreActorObejetivo;
         nombreActorObejetivo = readString("Introduzca el nombre del actor que desea modificar\n");
@@ -538,45 +456,34 @@ public void altaPelicula(){
 
     }//Fin Metodo modDirectores
 
-    //------------------------------------------------------
-
-    //------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     public  void mostrarActor(){
 
         String nombreActorObejetivo;
         nombreActorObejetivo = readString("Introduzca el nombre del actor que desea mostrar\n");
         m.mostrarActor(nombreActorObejetivo);
 
-    }
+    }//Fin mostrar Actor
 
-//---------------------------------------------------------------------------------
-
+    //----------------------------------------------------------------------------------------------
     public  void  listarPeliculas(){
 
         m.listaPeliculas();
 
-    }
+    }//Fin ListarPeliuclas
 
-
-    //---------------------------------------------------------------------------------
-
+    //----------------------------------------------------------------------------------------------
     public  void  listarDirectores(){
 
         m.listaDirectores();
 
-    }
+    }//Fin listarDirector
 
-    //---------------------------------------------------------------------------------
-
+    //----------------------------------------------------------------------------------------------
     public  void  listarActores(){
 
         m.listaActores();
 
-    }
-
-
-
-
-
+    }//Fin listarActores
 
 }//Fin Controller
